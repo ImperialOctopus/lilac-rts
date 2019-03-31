@@ -1,28 +1,35 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'dart:html' as html;
 import 'package:stagexl/stagexl.dart';
 import 'scripts/unit.dart';
+import 'scripts/unit_select.dart';
 
-Future main() async {
-  // configure StageXL default options.
+Set<Unit> allUnits;
+Set<Unit> selectedUnits;
 
-  StageXL.stageOptions.renderEngine = RenderEngine.WebGL;
-  StageXL.stageOptions.inputEventMode = InputEventMode.MouseAndTouch;
-  StageXL.stageOptions.backgroundColor = Color.CornflowerBlue;
+Future<Null> main() async {
+  allUnits = new Set<Unit>();
+  selectedUnits = new Set<Unit>();
 
-  // init Stage and RenderLoop
+  StageOptions stageOptions = new StageOptions()
+    ..backgroundColor = Color.CornflowerBlue
+    ..renderEngine = RenderEngine.WebGL
+    ..inputEventMode = InputEventMode.MouseAndTouch;
 
-  var canvas = html.querySelector('#stage');
-  var stage = new Stage(canvas, width: 600, height: 600);
-  var renderLoop = new RenderLoop();
+  html.Element canvas = html.querySelector('#stage');
+  Stage stage =
+      new Stage(canvas, width: 600, height: 600, options: stageOptions);
+  RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
-
-  // load resources
-
-  var resourceManager = new ResourceManager();
-  resourceManager.addBitmapData("flowers", "assets/images/flowers.png");
+  ResourceManager resourceManager = new ResourceManager();
   await resourceManager.load();
 
-  var a = new Unit(stage, 100, 100);
+  UnitSelect u = new UnitSelect(stage, allUnits);
+
+  Unit a1 = new Unit(stage, Point(200, 100));
+  Unit a2 = new Unit(stage, Point(450, 150));
+  Unit a3 = new Unit(stage, Point(100, 300));
+  Unit a4 = new Unit(stage, Point(350, 200));
+
+  allUnits..add(a1)..add(a2)..add(a3)..add(a4);
 }
