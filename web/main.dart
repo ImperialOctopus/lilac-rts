@@ -1,19 +1,28 @@
+import 'dart:async';
+import 'dart:math' as math;
 import 'dart:html' as html;
 import 'package:stagexl/stagexl.dart';
+import 'scripts/unit.dart';
 
-void main() {
+Future main() async {
+  // configure StageXL default options.
+
+  StageXL.stageOptions.renderEngine = RenderEngine.WebGL;
+  StageXL.stageOptions.inputEventMode = InputEventMode.MouseAndTouch;
+  StageXL.stageOptions.backgroundColor = Color.CornflowerBlue;
+
+  // init Stage and RenderLoop
+
   var canvas = html.querySelector('#stage');
-  var stage = new Stage(canvas);
+  var stage = new Stage(canvas, width: 600, height: 600);
   var renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
 
-  var shape = new Shape();
-  shape.graphics.circle(100, 100, 100);
-  shape.graphics.fillColor(Color.CornflowerBlue);
-  stage.addChild(shape);
+  // load resources
 
-  var shape2 = new Shape();
-  shape2.graphics.circle(100, 100, 50);
-  shape2.graphics.fillColor(Color.White);
-  stage.addChild(shape2);
+  var resourceManager = new ResourceManager();
+  resourceManager.addBitmapData("flowers", "assets/images/flowers.png");
+  await resourceManager.load();
+
+  var a = new Unit(stage, 100, 100);
 }
