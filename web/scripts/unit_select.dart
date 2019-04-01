@@ -10,7 +10,6 @@ class UnitSelect {
   bool selecting;
 
   Set<Unit> allUnits;
-  Set<Unit> selectedUnits;
 
   UnitSelect(this.stage, this.allUnits) {
     shape = new Shape();
@@ -29,37 +28,43 @@ class UnitSelect {
   }
 
   void stopDrag(InputEvent e) {
-    position1 = new Point(e.stageX, e.stageY);
+    position2 = new Point(e.stageX, e.stageY);
     shape.graphics.clear();
     select();
     selecting = false;
   }
 
   void select() {
-    selectedUnits = new Set<Unit>();
-    Rectangle r = Rectangle(position1.x, position1.y, position2.x - position1.x,
-        position2.y - position1.y);
+    num left = position1.x < position2.x ? position1.x : position2.x;
+    num top = position1.y < position2.y ? position1.y : position2.y;
+    num width = (position1.x - position2.x).abs();
+    num height = (position1.y - position2.y).abs();
+    Rectangle r = Rectangle(left, top, width, height);
     for (var unit in allUnits) {
       if (r.contains(unit.position.x, unit.position.y)) {
-        selectedUnits.add(unit);
+        unit.select();
+      } else {
+        unit.deselect();
       }
     }
-    print(selectedUnits);
   }
 
   void update(EnterFrameEvent e) {
     if (selecting) {
       stage.mousePosition;
       position2 = stage.mousePosition;
-
-      shape.graphics.clear();
-      shape.graphics
-        ..beginPath()
-        ..rect(position1.x, position1.y, position2.x - position1.x,
-            position2.y - position1.y)
-        ..closePath()
-        ..fillColor(Color.White);
-      stage.addChild(shape);
+      draw();
     }
+  }
+
+  void draw() {
+    shape.graphics.clear();
+    shape.graphics
+      ..beginPath()
+      ..rect(position1.x, position1.y, position2.x - position1.x,
+          position2.y - position1.y)
+      ..closePath()
+      ..fillColor(Color.White);
+    stage.addChild(shape);
   }
 }
