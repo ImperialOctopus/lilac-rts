@@ -3,6 +3,7 @@ import 'dart:html' as html;
 import 'package:stagexl/stagexl.dart';
 import 'scripts/unit.dart';
 import 'scripts/unit_select.dart';
+import 'scripts/structures.dart';
 
 Set<Unit> allUnits;
 Set<Unit> selectedUnits;
