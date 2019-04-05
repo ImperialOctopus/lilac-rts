@@ -20,6 +20,4 @@ Future<Null> main() async {
 
   Game game = new Game(stage);
   game.start();
-
-  sprite.onRender.listen(game.render);
 }

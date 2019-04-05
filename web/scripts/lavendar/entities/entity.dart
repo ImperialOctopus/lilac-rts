@@ -1,25 +1,19 @@
-import 'package:stagexl/stagexl.dart';
+import 'package:vector_math/vector_math.dart';
 
 class Entity {
-  shape;
-  image;
+  int mass;
+  Vector2 velocity;
+  Vector2 position;
 
-  static Stage stage;
-  Sprite sprite;
-  Point<num> position;
-  static num radius = 10;
+  int size;
 
-  Entity(this.position) {
-    
-  }
+  Entity(this.position) {}
 
-  void setImage(Sprite s) {
-    sprite = s;
-    stage.addChild(sprite);
-  }
-  void render(RenderEvent e) {
-    sprite
-      ..x = position.x
-      ..y = position.y;
-  }
+  void collision() {}
+  void update() {}
+
+  // Target
+  // Obstacle
+  // Consumable
+  // Projectile
 }

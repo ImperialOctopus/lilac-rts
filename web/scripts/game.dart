@@ -7,13 +7,21 @@ import 'renderer.dart';
 import 'unit_select.dart';
 
 class Game {
-  Stage stage;
-  Game(this.stage) {}
+  static Stage stage;
+  Engine engine;
+  Renderer renderer;
+  UnitSelect unitSelect;
+
+  Game(Stage _stage) {
+    stage = _stage;
+  }
 
   void start() {
-    Engine e = new Engine();
-    Renderer r = new Renderer(stage);
-    UnitSelect u = new UnitSelect(stage, allUnits);
+    engine = new Engine();
+    renderer = new Renderer();
+    unitSelect = new UnitSelect();
+
+    stage.onEnterFrame.listen(update);
 
     createUnit(new Vector2(200, 100));
     createUnit(new Vector2(450, 150));
@@ -21,6 +29,13 @@ class Game {
     createUnit(new Vector2(350, 200));
   }
 
-  void createUnit(Vector2 position) {}
+  void update(EnterFrameEvent f) {
+    engine.update();
+  }
+
+  void createUnit(Vector2 position) {
+    engine.createUnit(position);
+  }
+
   void submitOrder(Set<Unit> units, Target target, TargetType type) {}
 }

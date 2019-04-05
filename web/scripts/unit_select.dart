@@ -1,25 +1,23 @@
 import 'package:stagexl/stagexl.dart';
-import 'unit.dart';
+import 'package:vector_math/vector_math.dart';
+
+import 'game.dart';
 
 class UnitSelect {
-  Stage stage;
   Shape shape;
 
-  Point position1;
-  Point position2;
+  Vector2 position1;
+  Vector2 position2;
   bool selecting;
 
-  Set<Unit> allUnits;
-
-  UnitSelect(this.stage, this.allUnits) {
+  UnitSelect() {
     shape = new Shape();
     selecting = false;
-    stage
+    Game.stage
       ..onMouseDown.listen(startDrag)
       ..onTouchBegin.listen(startDrag)
       ..onMouseUp.listen(stopDrag)
       ..onTouchEnd.listen(stopDrag);
-    stage.onEnterFrame.listen(update);
   }
 
   void startDrag(InputEvent e) {
