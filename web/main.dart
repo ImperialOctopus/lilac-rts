@@ -1,17 +1,10 @@
 import 'dart:async';
 import 'dart:html' as html;
 import 'package:stagexl/stagexl.dart';
-import 'scripts/unit.dart';
-import 'scripts/unit_select.dart';
-import 'scripts/structures.dart';
 
-Set<Unit> allUnits;
-Set<Unit> selectedUnits;
+import 'scripts/game.dart';
 
 Future<Null> main() async {
-  allUnits = new Set<Unit>();
-  selectedUnits = new Set<Unit>();
-
   StageOptions stageOptions = new StageOptions()
     ..backgroundColor = Color.CornflowerBlue
     ..renderEngine = RenderEngine.WebGL
@@ -25,14 +18,8 @@ Future<Null> main() async {
   ResourceManager resourceManager = new ResourceManager();
   await resourceManager.load();
 
-  Unit.selectedUnits = selectedUnits;
-  Unit.stage = stage;
-  UnitSelect u = new UnitSelect(stage, allUnits);
+  Game game = new Game(stage);
+  game.start();
 
-  Unit a1 = new Unit(Point(200, 100));
-  Unit a2 = new Unit(Point(450, 150));
-  Unit a3 = new Unit(Point(100, 300));
-  Unit a4 = new Unit(Point(350, 200));
-
-  allUnits..add(a1)..add(a2)..add(a3)..add(a4);
+  sprite.onRender.listen(game.render);
 }
