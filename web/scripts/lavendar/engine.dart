@@ -4,8 +4,8 @@ import 'entities/entity.dart';
 import 'entities/unit.dart';
 
 class Engine {
-  static List<Entity> entities;
-  static List<Unit> units;
+  List<Entity> entities;
+  List<Unit> units;
 
   Engine() {
     units = new List<Unit>();
@@ -13,6 +13,7 @@ class Engine {
   }
 
   void start() {}
+
   void update() {
     for (var item in entities) {
       item.update();

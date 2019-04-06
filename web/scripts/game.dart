@@ -8,6 +8,7 @@ import 'unit_select.dart';
 
 class Game {
   static Stage stage;
+  static double deltaTime;
   Engine engine;
   Renderer renderer;
   UnitSelect unitSelect;
@@ -19,7 +20,7 @@ class Game {
   void start() {
     engine = new Engine();
     renderer = new Renderer();
-    unitSelect = new UnitSelect();
+    unitSelect = new UnitSelect(engine.units);
 
     stage.onEnterFrame.listen(update);
 
@@ -30,7 +31,12 @@ class Game {
   }
 
   void update(EnterFrameEvent f) {
+    deltaTime = f.passedTime;
     engine.update();
+
+    renderer.renderEntities(engine.entities);
+    renderer.renderSelection(unitSelect);
+    renderer.renderMenu();
   }
 
   void createUnit(Vector2 position) {
