@@ -11,6 +11,7 @@ class RenderableUnit extends RenderableEntity {
   RenderableUnit(this.unit) : super(unit);
 
   void updateImage() {
+    shape.graphics.clear();
     if (unit.team == Team.Friendly) {
       if (Game.unitSelect.selectedUnits.contains(unit)) {
         // Selected friendly

@@ -7,6 +7,7 @@ class RenderableEntity {
   Shape shape;
 
   RenderableEntity(this.entity) {
+    shape = new Shape();
     updateImage();
   }
 
