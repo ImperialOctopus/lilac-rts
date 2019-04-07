@@ -6,17 +6,21 @@ import 'ai/ai.dart';
 import 'entities/entity.dart';
 import 'entities/projectile.dart';
 import 'entities/unit.dart';
+import 'time.dart';
 
 class Engine {
+  Time time;
+  AI ai;
+
   List<Entity> entities;
   List<Unit> units;
   StreamController entityCreated;
-  AI ai;
 
   Engine() {
     units = new List<Unit>();
     entities = new List<Entity>();
     entityCreated = new StreamController<Entity>();
+    time = new Time();
     ai = new AI(units);
   }
 

@@ -10,7 +10,7 @@ class RenderableProjectile extends RenderableEntity {
 
   RenderableProjectile(this.projectile) : super(projectile);
 
-  void updateImage() {
+  void loadImage() {
     sprite.graphics.clear();
     Shape shape;
     if (projectile.team == Team.Friendly) {

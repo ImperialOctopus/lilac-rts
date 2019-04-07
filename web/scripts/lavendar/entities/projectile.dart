@@ -7,7 +7,6 @@ import 'unit.dart';
 
 class Projectile extends Entity {
   Team team;
-  double speed = 3;
 
   Projectile(Vector2 position, Vector2 velocity, this.team)
       : super(position, velocity) {

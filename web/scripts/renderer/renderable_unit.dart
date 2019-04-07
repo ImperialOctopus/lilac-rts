@@ -5,15 +5,21 @@ import '../lavendar/entities/entity.dart';
 import '../lavendar/entities/unit.dart';
 import 'renderable_entity.dart';
 import 'renderer.dart';
+import 'ui_reload.dart';
 
 class RenderableUnit extends RenderableEntity {
   Unit unit;
+  UIReload uiReload;
 
   RenderableUnit(this.unit) : super(unit) {
     sprite.onMouseClick.listen(onClick);
+    if (unit.team == Team.Friendly) {
+      uiReload = new UIReload(unit);
+      Game.renderer.renderableUI.add(uiReload);
+    }
   }
 
-  void updateImage() {
+  void loadImage() {
     sprite.graphics.clear();
     Shape shape;
     if (unit.team == Team.Friendly) {
@@ -31,12 +37,19 @@ class RenderableUnit extends RenderableEntity {
     sprite.addChild(shape);
   }
 
+  void update() {
+    super.update();
+  }
+
   void onClick(InputEvent e) {
     Game.userInput.selectUnit(unit);
   }
 
   void destroy(e) {
     Game.renderer.renderableUnits.remove(this);
+    if (uiReload != null) {
+      uiReload.destroy();
+    }
     super.destroy(e);
   }
 }

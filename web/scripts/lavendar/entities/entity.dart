@@ -4,6 +4,7 @@ import 'package:vector_math/vector_math.dart';
 
 import '../../game.dart';
 import '../collision.dart';
+import '../time.dart';
 
 enum EntityType { Unit, Projectile }
 enum Team { Friendly, Enemy }
@@ -30,7 +31,7 @@ class Entity {
   }
 
   void move() {
-    position += velocity;
+    position += velocity * Time.multiplier;
     collision();
   }
 

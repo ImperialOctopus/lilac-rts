@@ -51,9 +51,7 @@ class Game {
   void update(EnterFrameEvent f) {
     deltaTime = f.passedTime;
     engine.update();
-
-    renderer.renderEntities();
-    renderer.renderSelection();
+    renderer.update();
   }
 
   void entityCreated(Entity e) {

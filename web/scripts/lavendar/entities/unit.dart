@@ -4,13 +4,16 @@ import '../../game.dart';
 import '../collision.dart';
 import '../engine.dart';
 import '../target.dart';
+import '../time.dart';
 import 'entity.dart';
 
 class Unit extends Entity {
-  double speed = 2;
-  double acceleration = 0.5;
-  int fireCooldownTime = 50;
-  int fireCooldown = 0;
+  double speed = 1.5;
+  double acceleration = 0.3;
+  double fireCooldownTime = 100;
+  double projectileSpeed = 2;
+
+  double fireCooldown;
 
   Vector2 targetVelocity;
   Team team;
@@ -19,6 +22,7 @@ class Unit extends Entity {
 
   Unit(Vector2 position, this.team) : super(position, Vector2.zero()) {
     targetVelocity = Vector2.zero();
+    fireCooldown = 0;
     this.entityType = EntityType.Unit;
     moveTarget = new Target(TargetType.Move, Vector2.zero(), isSet: false);
     fireTarget = new Target(TargetType.Fire, Vector2.zero(), isSet: false);
@@ -78,11 +82,12 @@ class Unit extends Entity {
     if (fireTarget.isSet && canFire()) {
       fireCooldown = fireCooldownTime;
       fireTarget.isSet = false;
-      Vector2 v = (fireTarget.position - position).normalized() * 5;
+      Vector2 v =
+          (fireTarget.position - position).normalized() * projectileSpeed;
       Game.engine.createProjectile(position, v, team);
     }
     if (fireCooldown > 0) {
-      fireCooldown -= 1;
+      fireCooldown -= 1 * Time.multiplier;
     }
   }
 
@@ -95,6 +100,6 @@ class Unit extends Entity {
   }
 
   bool canFire() {
-    return (fireCooldown == 0);
+    return (fireCooldown <= 0);
   }
 }

@@ -7,20 +7,24 @@ import '../lavendar/entities/unit.dart';
 import 'renderable_entity.dart';
 import 'renderable_projectile.dart';
 import 'renderable_unit.dart';
+import 'ui_item.dart';
 
 class Renderer {
   List<RenderableEntity> renderableEntities;
+  List<UIItem> renderableUI;
   List<RenderableUnit> renderableUnits;
   Shape unitSelectShape;
   Shape backgroundShape;
 
   Renderer() {
     renderableEntities = new List<RenderableEntity>();
+    renderableUI = new List<UIItem>();
     renderableUnits = new List<RenderableUnit>();
     unitSelectShape = new Shape();
     backgroundShape = new Shape();
   }
 
+  // Creation
   void createBackground(Vector2 size, int color) {
     backgroundShape = rectangle(new Vector2(0, 0), size, color);
     Game.stage.addChild(backgroundShape);
@@ -37,17 +41,25 @@ class Renderer {
     renderableEntities.add(p);
   }
 
-  void updateUnits() {
-    for (RenderableUnit ru in renderableUnits) {
-      ru.updateImage();
-    }
+  // Update loop
+
+  void update() {
+    renderEntities();
+    renderUI();
+    renderSelection();
   }
 
   void renderEntities() {
     for (RenderableEntity re in renderableEntities) {
-      re.sprite.x = re.entity.position.x;
-      re.sprite.y = re.entity.position.y;
+      re.update();
       Game.stage.addChild(re.sprite);
+    }
+  }
+
+  void renderUI() {
+    for (UIItem ui in renderableUI) {
+      ui.update();
+      Game.stage.addChild(ui.shape);
     }
   }
 
@@ -60,6 +72,14 @@ class Renderer {
           borderedRectangle(Game.userInput.position1, mouse, Color.White);
     }
     Game.stage.addChild(unitSelectShape);
+  }
+
+  // Unit appearance changed
+
+  void updateUnits() {
+    for (RenderableUnit ru in renderableUnits) {
+      ru.loadImage();
+    }
   }
 
   static Shape borderedCircle(fill, border, radius) {
@@ -110,6 +130,21 @@ class Renderer {
           position2.y - position1.y)
       ..closePath()
       ..fillColor(fill);
+    return shape;
+  }
+
+  static Shape filledBar(Vector2 position, double thickness, double length,
+      double fillLength, int backColor, int fillColor) {
+    Shape shape = new Shape();
+    shape.graphics
+      ..beginPath()
+      ..rect(position.x, position.y, length, thickness)
+      ..closePath()
+      ..fillColor(backColor)
+      ..beginPath()
+      ..rect(position.x, position.y, fillLength, thickness)
+      ..closePath()
+      ..fillColor(fillColor);
     return shape;
   }
 }

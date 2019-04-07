@@ -10,10 +10,15 @@ class RenderableEntity {
   RenderableEntity(this.entity) {
     entity.entityDestroyed.stream.listen(destroy);
     sprite = new Sprite();
-    updateImage();
+    loadImage();
   }
 
-  void updateImage() {}
+  void loadImage() {}
+
+  void update() {
+    sprite.x = entity.position.x;
+    sprite.y = entity.position.y;
+  }
 
   void destroy(e) {
     sprite.removeFromParent();

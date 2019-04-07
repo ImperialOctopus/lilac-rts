@@ -7,7 +7,7 @@ import 'scripts/game.dart';
 Future<Null> main() async {
   StageOptions stageOptions = new StageOptions()
     ..backgroundColor = backgroundColor
-    ..renderEngine = RenderEngine.WebGL
+    ..renderEngine = RenderEngine.Canvas2D
     ..inputEventMode = InputEventMode.MouseAndTouch;
 
   html.Element canvas = html.querySelector('#stage');
