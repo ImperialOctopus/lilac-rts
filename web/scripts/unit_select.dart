@@ -28,6 +28,12 @@ class UnitSelect {
     select();
   }
 
+  void setMoveTarget(InputEvent e) {
+    for (Unit u in selectedUnits) {
+      u.setMoveTarget(new Vector2(e.stageX, e.stageY));
+    }
+  }
+
   void select() {
     num left = position1.x < position2.x ? position1.x : position2.x;
     num top = position1.y < position2.y ? position1.y : position2.y;
@@ -43,6 +49,12 @@ class UnitSelect {
         }
       }
     }
+    Game.renderer.updateUnits();
+  }
+
+  void selectUnit(Unit u) {
+    selectedUnits = new List<Unit>();
+    selectedUnits.add(u);
     Game.renderer.updateUnits();
   }
 }

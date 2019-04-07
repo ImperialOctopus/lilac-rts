@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:vector_math/vector_math.dart';
 
 import '../target.dart';
@@ -15,9 +13,7 @@ class Unit extends Entity {
 
   Unit(Vector2 position, this.team) : super(position) {
     this.entityType = EntityType.Unit;
-    moveTarget = new Target();
-    moveTarget.position = new Vector2(100, 100);
-    moveTarget.isSet = true;
+    moveTarget = new Target(TargetType.Move, Vector2.zero(), isSet: false);
   }
 
   void update() {
@@ -37,5 +33,9 @@ class Unit extends Entity {
       velocity = difference;
       velocity.normalize();
     }
+  }
+
+  void setMoveTarget(Vector2 p) {
+    moveTarget = new Target(TargetType.Move, p);
   }
 }

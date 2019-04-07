@@ -8,10 +8,13 @@ import 'renderer.dart';
 class RenderableUnit extends RenderableEntity {
   Unit unit;
 
-  RenderableUnit(this.unit) : super(unit);
+  RenderableUnit(this.unit) : super(unit) {
+    sprite.onMouseClick.listen(onClick);
+  }
 
   void updateImage() {
-    shape.graphics.clear();
+    sprite.graphics.clear();
+    Shape shape;
     if (unit.team == Team.Friendly) {
       if (Game.unitSelect.selectedUnits.contains(unit)) {
         // Selected friendly
@@ -24,5 +27,10 @@ class RenderableUnit extends RenderableEntity {
       // Enemy
       shape = Renderer.borderedCircle(Color.White, Color.Red, 10);
     }
+    sprite.addChild(shape);
+  }
+
+  void onClick(InputEvent e) {
+    Game.unitSelect.selectUnit(unit);
   }
 }

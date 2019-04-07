@@ -26,6 +26,7 @@ class Game {
     stage.onEnterFrame.listen(update);
     stage.onMouseDown.listen(unitSelect.startDrag);
     stage.onMouseUp.listen(unitSelect.stopDrag);
+    stage.onMouseRightDown.listen(unitSelect.setMoveTarget);
 
     createUnit(new Vector2(50, 75), Team.Friendly);
     createUnit(new Vector2(100, 200), Team.Friendly);

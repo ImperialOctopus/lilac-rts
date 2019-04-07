@@ -32,9 +32,9 @@ class Renderer {
 
   void renderEntities() {
     for (RenderableEntity re in renderableEntities) {
-      re.shape.x = re.entity.position.x;
-      re.shape.y = re.entity.position.y;
-      Game.stage.addChild(re.shape);
+      re.sprite.x = re.entity.position.x;
+      re.sprite.y = re.entity.position.y;
+      Game.stage.addChild(re.sprite);
     }
   }
 

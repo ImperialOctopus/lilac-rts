@@ -4,10 +4,10 @@ import '../lavendar/entities/entity.dart';
 
 class RenderableEntity {
   Entity entity;
-  Shape shape;
+  Sprite sprite;
 
   RenderableEntity(this.entity) {
-    shape = new Shape();
+    sprite = new Sprite();
     updateImage();
   }
 
