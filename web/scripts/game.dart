@@ -7,6 +7,11 @@ import 'lavendar/target.dart';
 import 'renderer/renderer.dart';
 import 'user_input.dart';
 
+const int stageHeight = 600;
+const int stageWidth = 600;
+const int backgroundColor = Color.White;
+const int foregroundColor = Color.CornflowerBlue;
+
 class Game {
   static double deltaTime;
   static Stage stage;
@@ -22,19 +27,24 @@ class Game {
     engine = new Engine();
     userInput = new UserInput();
     renderer = new Renderer();
+    renderer.createBackground(
+        new Vector2(stageWidth as double, stageHeight as double),
+        foregroundColor);
 
+    engine.entityCreated.stream.listen((e) => entityCreated(e));
     stage.onEnterFrame.listen(update);
     stage.onMouseDown.listen(userInput.startDrag);
     stage.onMouseUp.listen(userInput.stopDrag);
     stage.onMouseRightDown.listen(userInput.setMoveTarget);
+    stage.onMouseMiddleDown.listen(userInput.setFireTarget);
 
-    createUnit(new Vector2(50, 75), Team.Friendly);
-    createUnit(new Vector2(100, 200), Team.Friendly);
-    createUnit(new Vector2(200, 50), Team.Friendly);
-    createUnit(new Vector2(250, 125), Team.Friendly);
-    createUnit(new Vector2(600, 500), Team.Enemy);
-    createUnit(new Vector2(500, 400), Team.Enemy);
-    createUnit(new Vector2(450, 500), Team.Enemy);
+    engine.createUnit(new Vector2(50, 75), Team.Friendly);
+    engine.createUnit(new Vector2(100, 200), Team.Friendly);
+    engine.createUnit(new Vector2(200, 50), Team.Friendly);
+    engine.createUnit(new Vector2(250, 125), Team.Friendly);
+    engine.createUnit(new Vector2(550, 500), Team.Enemy);
+    engine.createUnit(new Vector2(500, 400), Team.Enemy);
+    engine.createUnit(new Vector2(450, 500), Team.Enemy);
   }
 
   void update(EnterFrameEvent f) {
@@ -45,9 +55,15 @@ class Game {
     renderer.renderSelection();
   }
 
-  void createUnit(Vector2 position, Team team) {
-    Entity unit = engine.createUnit(position, team);
-    renderer.addUnit(unit);
+  void entityCreated(Entity e) {
+    switch (e.entityType) {
+      case EntityType.Unit:
+        renderer.addUnit(e);
+        break;
+      case EntityType.Projectile:
+        renderer.addProjectile(e);
+        break;
+    }
   }
 
   void submitOrder(Set<Unit> units, Target target, TargetType type) {}

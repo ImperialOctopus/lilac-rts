@@ -6,13 +6,13 @@ import 'scripts/game.dart';
 
 Future<Null> main() async {
   StageOptions stageOptions = new StageOptions()
-    ..backgroundColor = Color.CornflowerBlue
+    ..backgroundColor = backgroundColor
     ..renderEngine = RenderEngine.WebGL
     ..inputEventMode = InputEventMode.MouseAndTouch;
 
   html.Element canvas = html.querySelector('#stage');
-  Stage stage =
-      new Stage(canvas, width: 600, height: 600, options: stageOptions);
+  Stage stage = new Stage(canvas,
+      width: stageHeight, height: stageWidth, options: stageOptions);
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
   ResourceManager resourceManager = new ResourceManager();

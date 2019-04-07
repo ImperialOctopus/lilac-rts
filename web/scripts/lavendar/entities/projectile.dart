@@ -5,8 +5,6 @@ import '../collision.dart';
 import 'entity.dart';
 import 'unit.dart';
 
-enum Team { Friendly, Enemy }
-
 class Projectile extends Entity {
   Team team;
   double speed = 3;
@@ -22,13 +20,18 @@ class Projectile extends Entity {
 
   void move() {
     super.move();
+    if (!Collision.pointWithinRectangle(Vector2.zero(),
+        new Vector2(stageWidth as double, stageHeight as double), position)) {
+      destroy();
+    }
   }
 
   void collision() {
     for (Unit unit in Game.engine.units) {
       if (unit.team != team) {
         if (Collision.circlePoint(unit.circle(), this.position)) {
-          print("Hit");
+          unit.projectileHit();
+          destroy();
         }
       }
     }

@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:vector_math/vector_math.dart';
 
+import '../../game.dart';
 import '../collision.dart';
 
 enum EntityType { Unit, Projectile }
+enum Team { Friendly, Enemy }
 
 class Entity {
-  Vector2 zero = new Vector2(0, 0);
+  StreamController entityDestroyed;
   EntityType entityType;
 
   Vector2 velocity;
@@ -13,7 +17,9 @@ class Entity {
   int radius = 10;
   int mass;
 
-  Entity(this.position, this.velocity);
+  Entity(this.position, this.velocity) {
+    entityDestroyed = new StreamController();
+  }
 
   Circle circle() {
     return new Circle(position, radius);
@@ -29,6 +35,11 @@ class Entity {
   }
 
   void collision() {}
+
+  void destroy() {
+    Game.engine.entities.remove(this);
+    entityDestroyed.add("Destroy");
+  }
 
   // Target
   // Obstacle

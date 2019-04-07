@@ -1,6 +1,7 @@
 import 'package:stagexl/stagexl.dart';
 import 'package:vector_math/vector_math.dart';
 import 'game.dart';
+import 'lavendar/entities/entity.dart';
 import 'lavendar/entities/unit.dart';
 
 class UserInput {
@@ -18,12 +19,14 @@ class UserInput {
   }
 
   void startDrag(InputEvent e) {
-    position1 = new Vector2(e.stageX, e.stageY);
+    position1 = new Vector2(
+        e.stageX.clamp(0, stageWidth), e.stageY.clamp(0, stageHeight));
     selecting = true;
   }
 
   void stopDrag(InputEvent e) {
-    position2 = new Vector2(e.stageX, e.stageY);
+    position2 = new Vector2(
+        e.stageX.clamp(0, stageWidth), e.stageY.clamp(0, stageHeight));
     selecting = false;
     select();
   }
@@ -31,6 +34,12 @@ class UserInput {
   void setMoveTarget(InputEvent e) {
     for (Unit u in selectedUnits) {
       u.setMoveTarget(new Vector2(e.stageX, e.stageY));
+    }
+  }
+
+  void setFireTarget(InputEvent e) {
+    for (Unit u in selectedUnits) {
+      u.setFireTarget(new Vector2(e.stageX, e.stageY));
     }
   }
 

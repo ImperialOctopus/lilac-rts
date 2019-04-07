@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:stagexl/stagexl.dart';
 
 import 'package:vector_math/vector_math.dart';
 
@@ -35,6 +36,19 @@ class Collision {
         pow((a.radius + b.radius), 2);
     direction *= penetration;
     return direction;
+  }
+
+  static bool pointWithinRectangle(Vector2 a, Vector2 b, Vector2 p) {
+    Rectangle rectangle = rectFromPoints(a, b);
+    return rectangle.contains(p.x, p.y);
+  }
+
+  static Rectangle rectFromPoints(Vector2 a, Vector2 b) {
+    num left = a.x < b.x ? a.x : b.x;
+    num top = a.y < b.y ? a.y : b.y;
+    num width = (a.x - b.x).abs();
+    num height = (a.y - b.y).abs();
+    return Rectangle(left, top, width, height);
   }
 }
 

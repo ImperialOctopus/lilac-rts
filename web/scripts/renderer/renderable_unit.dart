@@ -1,6 +1,7 @@
 import 'package:stagexl/stagexl.dart';
 
 import '../game.dart';
+import '../lavendar/entities/entity.dart';
 import '../lavendar/entities/unit.dart';
 import 'renderable_entity.dart';
 import 'renderer.dart';
@@ -32,5 +33,10 @@ class RenderableUnit extends RenderableEntity {
 
   void onClick(InputEvent e) {
     Game.userInput.selectUnit(unit);
+  }
+
+  void destroy(e) {
+    Game.renderer.renderableUnits.remove(this);
+    super.destroy(e);
   }
 }
