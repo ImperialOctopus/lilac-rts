@@ -38,13 +38,14 @@ class Game {
     stage.onMouseRightDown.listen(userInput.setMoveTarget);
     stage.onMouseMiddleDown.listen(userInput.setFireTarget);
 
-    engine.createUnit(new Vector2(50, 75), Team.Friendly);
-    engine.createUnit(new Vector2(100, 200), Team.Friendly);
-    engine.createUnit(new Vector2(200, 50), Team.Friendly);
-    engine.createUnit(new Vector2(250, 125), Team.Friendly);
+    engine.createUnit(new Vector2(50, 50), Team.Friendly);
+    engine.createUnit(new Vector2(50, 100), Team.Friendly);
+    engine.createUnit(new Vector2(100, 50), Team.Friendly);
+    engine.createUnit(new Vector2(100, 100), Team.Friendly);
+    engine.createUnit(new Vector2(500, 500), Team.Enemy);
+    engine.createUnit(new Vector2(500, 550), Team.Enemy);
     engine.createUnit(new Vector2(550, 500), Team.Enemy);
-    engine.createUnit(new Vector2(500, 400), Team.Enemy);
-    engine.createUnit(new Vector2(450, 500), Team.Enemy);
+    engine.createUnit(new Vector2(550, 550), Team.Enemy);
   }
 
   void update(EnterFrameEvent f) {

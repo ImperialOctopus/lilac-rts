@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:vector_math/vector_math.dart';
 
+import 'ai/ai.dart';
 import 'entities/entity.dart';
 import 'entities/projectile.dart';
 import 'entities/unit.dart';
@@ -9,13 +10,14 @@ import 'entities/unit.dart';
 class Engine {
   List<Entity> entities;
   List<Unit> units;
-
   StreamController entityCreated;
+  AI ai;
 
   Engine() {
     units = new List<Unit>();
     entities = new List<Entity>();
     entityCreated = new StreamController<Entity>();
+    ai = new AI(units);
   }
 
   void start() {}
@@ -24,6 +26,7 @@ class Engine {
     for (var item in entities) {
       item.update();
     }
+    ai.update();
   }
 
   createUnit(Vector2 position, Team team) {
