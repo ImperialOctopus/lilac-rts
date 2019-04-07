@@ -1,5 +1,6 @@
 import 'package:vector_math/vector_math.dart';
 
+import '../../game.dart';
 import '../target.dart';
 import 'entity.dart';
 
@@ -30,8 +31,9 @@ class Unit extends Entity {
     }
     if (moveTarget.isSet) {
       Vector2 difference = moveTarget.position - position;
+      difference.normalize();
+      difference *= speed * Game.deltaTime;
       velocity = difference;
-      velocity.normalize();
     }
   }
 

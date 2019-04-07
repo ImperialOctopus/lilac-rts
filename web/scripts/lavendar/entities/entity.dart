@@ -4,9 +4,9 @@ enum EntityType { Unit }
 
 class Entity {
   EntityType entityType;
-  int mass;
   Vector2 velocity;
   Vector2 position;
+  int mass;
   int radius;
 
   Entity(this.position) {
