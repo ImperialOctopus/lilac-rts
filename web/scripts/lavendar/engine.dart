@@ -20,9 +20,10 @@ class Engine {
     }
   }
 
-  void createUnit(Vector2 position) {
-    Unit u = new Unit(position);
+  Entity createUnit(Vector2 position, Team team) {
+    Unit u = new Unit(position, team);
     entities.add(u);
     units.add(u);
+    return u;
   }
 }

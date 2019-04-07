@@ -10,12 +10,11 @@ class UnitSelect {
   Vector2 position1;
   Vector2 position2;
   bool selecting;
-  Shape shape;
 
-  UnitSelect(this.allUnits) {
-    shape = new Shape();
+  UnitSelect() {
+    allUnits = Game.engine.units;
+    selectedUnits = new List<Unit>();
     selecting = false;
-    Game.stage..onMouseDown.listen(startDrag)..onMouseUp.listen(stopDrag);
   }
 
   void startDrag(InputEvent e) {
@@ -25,9 +24,8 @@ class UnitSelect {
 
   void stopDrag(InputEvent e) {
     position2 = new Vector2(e.stageX, e.stageY);
-    shape.graphics.clear();
-    select();
     selecting = false;
+    select();
   }
 
   void select() {
@@ -39,11 +37,12 @@ class UnitSelect {
 
     selectedUnits = new List<Unit>();
     for (var unit in allUnits) {
-      if (unit.team == 0) {
+      if (unit.team == Team.Friendly) {
         if (selection.contains(unit.position.x, unit.position.y)) {
           selectedUnits.add(unit);
         }
       }
     }
+    Game.renderer.updateUnits();
   }
 }
