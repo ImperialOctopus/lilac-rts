@@ -1,16 +1,22 @@
 import 'package:vector_math/vector_math.dart';
 
-enum EntityType { Unit }
+import '../collision.dart';
+
+enum EntityType { Unit, Projectile }
 
 class Entity {
+  Vector2 zero = new Vector2(0, 0);
   EntityType entityType;
+
   Vector2 velocity;
   Vector2 position;
+  int radius = 10;
   int mass;
-  int radius;
 
-  Entity(this.position) {
-    velocity = Vector2.zero();
+  Entity(this.position, this.velocity);
+
+  Circle circle() {
+    return new Circle(position, radius);
   }
 
   void update() {
@@ -19,6 +25,7 @@ class Entity {
 
   void move() {
     position += velocity;
+    collision();
   }
 
   void collision() {}
@@ -26,5 +33,4 @@ class Entity {
   // Target
   // Obstacle
   // Consumable
-  // Projectile
 }

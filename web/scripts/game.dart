@@ -5,14 +5,14 @@ import 'lavendar/entities/entity.dart';
 import 'lavendar/entities/unit.dart';
 import 'lavendar/target.dart';
 import 'renderer/renderer.dart';
-import 'unit_select.dart';
+import 'user_input.dart';
 
 class Game {
   static double deltaTime;
   static Stage stage;
   static Engine engine;
   static Renderer renderer;
-  static UnitSelect unitSelect;
+  static UserInput userInput;
 
   Game(_stage) {
     stage = _stage;
@@ -20,13 +20,13 @@ class Game {
 
   void start() {
     engine = new Engine();
-    unitSelect = new UnitSelect();
+    userInput = new UserInput();
     renderer = new Renderer();
 
     stage.onEnterFrame.listen(update);
-    stage.onMouseDown.listen(unitSelect.startDrag);
-    stage.onMouseUp.listen(unitSelect.stopDrag);
-    stage.onMouseRightDown.listen(unitSelect.setMoveTarget);
+    stage.onMouseDown.listen(userInput.startDrag);
+    stage.onMouseUp.listen(userInput.stopDrag);
+    stage.onMouseRightDown.listen(userInput.setMoveTarget);
 
     createUnit(new Vector2(50, 75), Team.Friendly);
     createUnit(new Vector2(100, 200), Team.Friendly);

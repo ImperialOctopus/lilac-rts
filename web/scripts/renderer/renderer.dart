@@ -40,8 +40,8 @@ class Renderer {
 
   void renderSelection() {
     unitSelectShape.graphics.clear();
-    if (Game.unitSelect.selecting) {
-      unitSelectShape = borderedRectangle(Game.unitSelect.position1,
+    if (Game.userInput.selecting) {
+      unitSelectShape = borderedRectangle(Game.userInput.position1,
           new Vector2(Game.stage.mouseX, Game.stage.mouseY));
     }
     Game.stage.addChild(unitSelectShape);

@@ -26,4 +26,12 @@ class Engine {
     units.add(u);
     return u;
   }
+
+  static Vector2 clampVector(Vector2 vector, double magnitude) {
+    if (vector.length2 > magnitude * magnitude) {
+      return vector.normalized() * magnitude;
+    } else {
+      return vector;
+    }
+  }
 }

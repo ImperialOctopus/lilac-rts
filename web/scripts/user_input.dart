@@ -3,7 +3,7 @@ import 'package:vector_math/vector_math.dart';
 import 'game.dart';
 import 'lavendar/entities/unit.dart';
 
-class UnitSelect {
+class UserInput {
   List<Unit> allUnits;
   List<Unit> selectedUnits;
 
@@ -11,7 +11,7 @@ class UnitSelect {
   Vector2 position2;
   bool selecting;
 
-  UnitSelect() {
+  UserInput() {
     allUnits = Game.engine.units;
     selectedUnits = new List<Unit>();
     selecting = false;
