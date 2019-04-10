@@ -8,22 +8,22 @@ import 'entities/projectile.dart';
 import 'entities/unit.dart';
 import 'time.dart';
 
+enum LavendarEvent { UnitCreated }
+
 class Engine {
   Time time;
   AI ai;
 
-  List<Unit> units;
-  StreamController entityCreated;
+  StreamController streamController;
 
   Engine() {
     Entity.all = new List<Entity>();
-    units = new List<Unit>();
-    entityCreated = new StreamController<Entity>();
+    Unit.all = new List<Unit>();
+    Projectile.all = new List<Projectile>();
+    streamController = new StreamController<Entity>();
     time = new Time();
-    ai = new AI(units);
+    ai = new AI();
   }
-
-  void start() {}
 
   void update() {
     for (var item in Entity.all) {
@@ -34,13 +34,12 @@ class Engine {
 
   createUnit(Vector2 position, Team team) {
     Unit u = new Unit(position, team);
-    units.add(u);
-    entityCreated.add(u);
+    streamController.add(u);
   }
 
   createProjectile(Vector2 position, Vector2 velocity, Team team) {
     Projectile u = new Projectile(position, velocity, team);
-    entityCreated.add(u);
+    streamController.add(u);
   }
 
   static Vector2 clampVector(Vector2 vector, double magnitude) {

@@ -13,7 +13,7 @@ class UserInput {
   bool selecting;
 
   UserInput() {
-    allUnits = Game.engine.units;
+    allUnits = Unit.all;
     selectedUnits = new List<Unit>();
     selecting = false;
   }

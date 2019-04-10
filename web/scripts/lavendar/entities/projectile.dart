@@ -6,10 +6,12 @@ import 'entity.dart';
 import 'unit.dart';
 
 class Projectile extends Entity {
+  static List<Projectile> all;
   Team team;
 
   Projectile(Vector2 position, Vector2 velocity, this.team)
       : super(position, velocity) {
+    all.add(this);
     this.entityType = EntityType.Projectile;
   }
 
@@ -26,7 +28,7 @@ class Projectile extends Entity {
   }
 
   void collision() {
-    for (Unit unit in Game.engine.units) {
+    for (Unit unit in Unit.all) {
       if (unit.team != team) {
         if (Collision.circlePoint(unit.circle(), this.position)) {
           unit.projectileHit();
@@ -34,5 +36,10 @@ class Projectile extends Entity {
         }
       }
     }
+  }
+
+  void destroy() {
+    Projectile.all.remove(this);
+    super.destroy();
   }
 }

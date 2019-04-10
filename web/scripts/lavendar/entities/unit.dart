@@ -8,6 +8,8 @@ import '../time.dart';
 import 'entity.dart';
 
 class Unit extends Entity {
+  static List<Unit> all;
+
   double speed = 1.5;
   double acceleration = 0.3;
   double fireCooldownTime = 100;
@@ -21,6 +23,8 @@ class Unit extends Entity {
   Target fireTarget;
 
   Unit(Vector2 position, this.team) : super(position, Vector2.zero()) {
+    all.add(this);
+
     targetVelocity = Vector2.zero();
     fireCooldown = 0;
     this.entityType = EntityType.Unit;
@@ -44,12 +48,12 @@ class Unit extends Entity {
   }
 
   void destroy() {
-    Game.engine.units.remove(this);
+    Unit.all.remove(this);
     super.destroy();
   }
 
   void collision() {
-    List<Entity> collisionSet = Game.engine.units;
+    List<Entity> collisionSet = Unit.all;
     for (Entity entity in collisionSet) {
       if (entity != this) {
         if (Collision.circleBoundingBox(this.circle(), entity.circle())) {

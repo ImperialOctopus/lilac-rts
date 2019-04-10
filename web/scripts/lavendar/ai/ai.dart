@@ -7,13 +7,12 @@ import '../entities/entity.dart';
 import '../entities/unit.dart';
 
 class AI {
-  List<Unit> allUnits;
   List<Unit> team;
   List<Unit> nonTeam;
 
   Random random;
 
-  AI(this.allUnits) {
+  AI() {
     random = new Random();
   }
 
@@ -21,7 +20,7 @@ class AI {
     team = new List<Unit>();
     nonTeam = new List<Unit>();
 
-    for (Unit unit in allUnits) {
+    for (Unit unit in Unit.all) {
       if (unit.team == Team.Enemy) {
         team.add(unit);
       } else {

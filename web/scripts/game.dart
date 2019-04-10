@@ -31,7 +31,7 @@ class Game {
         new Vector2(stageWidth as double, stageHeight as double),
         foregroundColor);
 
-    engine.entityCreated.stream.listen((e) => entityCreated(e));
+    engine.streamController.stream.listen((e) => entityCreated(e));
     stage.onEnterFrame.listen(update);
     stage.onMouseDown.listen(userInput.startDrag);
     stage.onMouseUp.listen(userInput.stopDrag);
