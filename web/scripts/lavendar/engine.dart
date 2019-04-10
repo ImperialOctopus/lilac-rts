@@ -12,13 +12,12 @@ class Engine {
   Time time;
   AI ai;
 
-  List<Entity> entities;
   List<Unit> units;
   StreamController entityCreated;
 
   Engine() {
+    Entity.all = new List<Entity>();
     units = new List<Unit>();
-    entities = new List<Entity>();
     entityCreated = new StreamController<Entity>();
     time = new Time();
     ai = new AI(units);
@@ -27,7 +26,7 @@ class Engine {
   void start() {}
 
   void update() {
-    for (var item in entities) {
+    for (var item in Entity.all) {
       item.update();
     }
     ai.update();
@@ -35,14 +34,12 @@ class Engine {
 
   createUnit(Vector2 position, Team team) {
     Unit u = new Unit(position, team);
-    entities.add(u);
     units.add(u);
     entityCreated.add(u);
   }
 
   createProjectile(Vector2 position, Vector2 velocity, Team team) {
     Projectile u = new Projectile(position, velocity, team);
-    entities.add(u);
     entityCreated.add(u);
   }
 

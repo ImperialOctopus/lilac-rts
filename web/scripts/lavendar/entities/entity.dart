@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../../game.dart';
 import '../collision.dart';
 import '../time.dart';
 
@@ -10,6 +9,8 @@ enum EntityType { Unit, Projectile }
 enum Team { Friendly, Enemy }
 
 class Entity {
+  static List<Entity> all;
+
   StreamController entityDestroyed;
   EntityType entityType;
 
@@ -19,6 +20,7 @@ class Entity {
   int mass;
 
   Entity(this.position, this.velocity) {
+    all.add(this);
     entityDestroyed = new StreamController();
   }
 
@@ -38,7 +40,7 @@ class Entity {
   void collision() {}
 
   void destroy() {
-    Game.engine.entities.remove(this);
+    Entity.all.remove(this);
     entityDestroyed.add("Destroy");
   }
 
