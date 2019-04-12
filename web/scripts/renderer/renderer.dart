@@ -20,7 +20,6 @@ class Renderer {
     renderableEntities = new List<RenderableEntity>();
     renderableUnits = new List<RenderableUnit>();
     unitSelectShape = new Shape();
-    backgroundShape = new Shape();
     UIItem.all = new List<UIItem>();
 
     backgroundShape = rectangle(
@@ -30,12 +29,6 @@ class Renderer {
     Game.stage.addChild(backgroundShape);
 
     UIFramerate a = new UIFramerate();
-  }
-
-  // Creation
-  void createBackground(Vector2 size, int color) {
-    backgroundShape = rectangle(new Vector2(0, 0), size, color);
-    Game.stage.addChild(backgroundShape);
   }
 
   void addUnit(Unit unit) {

@@ -4,17 +4,22 @@ import '../../game.dart';
 import 'ui_item.dart';
 
 class UIFramerate extends UIItem {
+  TextField textField;
+
   UIFramerate() : super() {
-    var textField1 = new TextField();
-    var textFormat1 = new TextFormat('Helvetica,Arial', 14, Color.Green,
+    textField = new TextField();
+    textField.defaultTextFormat = new TextFormat(
+        'Helvetica,Arial', 14, Color.Green,
         bold: true, italic: true);
-    textField1.defaultTextFormat = textFormat1;
-    textField1.text = "AAAA";
-    textField1.x = 10;
-    textField1.y = 10;
-    textField1.width = 920;
-    textField1.height = 20;
-    print("A");
-    Game.stage.addChild(textField1);
+    textField.text = "AAAA";
+    textField.x = 10;
+    textField.y = 10;
+    textField.width = 920;
+    textField.height = 20;
+    Game.stage.addChild(textField);
+  }
+
+  void update() {
+    textField.text = (1 / Game.deltaTime).round().toString() + " FPS";
   }
 }
