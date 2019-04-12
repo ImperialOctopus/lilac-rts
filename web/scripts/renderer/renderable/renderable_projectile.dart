@@ -1,9 +1,9 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../lavendar/entities/entity.dart';
-import '../lavendar/entities/projectile.dart';
+import '../../lavendar/entities/entity.dart';
+import '../../lavendar/entities/projectile.dart';
+import '../renderer.dart';
 import 'renderable_entity.dart';
-import 'renderer.dart';
 
 class RenderableProjectile extends RenderableEntity {
   Projectile projectile;

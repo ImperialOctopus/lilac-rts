@@ -1,7 +1,7 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../lavendar/entities/unit.dart';
-import 'renderer.dart';
+import '../../lavendar/entities/unit.dart';
+import '../renderer.dart';
 import 'ui_item.dart';
 
 class UIReload extends UIItem {

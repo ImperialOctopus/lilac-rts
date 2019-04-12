@@ -4,24 +4,32 @@ import 'package:vector_math/vector_math.dart';
 import '../game.dart';
 import '../lavendar/entities/projectile.dart';
 import '../lavendar/entities/unit.dart';
-import 'renderable_entity.dart';
-import 'renderable_projectile.dart';
-import 'renderable_unit.dart';
-import 'ui_item.dart';
+import 'renderable/renderable_entity.dart';
+import 'renderable/renderable_projectile.dart';
+import 'renderable/renderable_unit.dart';
+import 'ui/ui_framerate.dart';
+import 'ui/ui_item.dart';
 
 class Renderer {
   List<RenderableEntity> renderableEntities;
-  List<UIItem> renderableUI;
   List<RenderableUnit> renderableUnits;
   Shape unitSelectShape;
   Shape backgroundShape;
 
   Renderer() {
     renderableEntities = new List<RenderableEntity>();
-    renderableUI = new List<UIItem>();
     renderableUnits = new List<RenderableUnit>();
     unitSelectShape = new Shape();
     backgroundShape = new Shape();
+    UIItem.all = new List<UIItem>();
+
+    backgroundShape = rectangle(
+        new Vector2(0, 0),
+        new Vector2(stageWidth as double, stageHeight as double),
+        foregroundColor);
+    Game.stage.addChild(backgroundShape);
+
+    UIFramerate a = new UIFramerate();
   }
 
   // Creation
@@ -57,7 +65,7 @@ class Renderer {
   }
 
   void renderUI() {
-    for (UIItem ui in renderableUI) {
+    for (UIItem ui in UIItem.all) {
       ui.update();
       Game.stage.addChild(ui.shape);
     }
@@ -81,6 +89,8 @@ class Renderer {
       ru.loadImage();
     }
   }
+
+  // Static shapes
 
   static Shape borderedCircle(fill, border, radius) {
     Shape shape = new Shape();

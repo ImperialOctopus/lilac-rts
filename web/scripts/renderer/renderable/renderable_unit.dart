@@ -1,11 +1,11 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../game.dart';
-import '../lavendar/entities/entity.dart';
-import '../lavendar/entities/unit.dart';
+import '../../game.dart';
+import '../../lavendar/entities/entity.dart';
+import '../../lavendar/entities/unit.dart';
+import '../renderer.dart';
+import '../ui/ui_reload.dart';
 import 'renderable_entity.dart';
-import 'renderer.dart';
-import 'ui_reload.dart';
 
 class RenderableUnit extends RenderableEntity {
   Unit unit;
@@ -15,7 +15,6 @@ class RenderableUnit extends RenderableEntity {
     sprite.onMouseClick.listen(onClick);
     if (unit.team == Team.Friendly) {
       uiReload = new UIReload(unit);
-      Game.renderer.renderableUI.add(uiReload);
     }
   }
 

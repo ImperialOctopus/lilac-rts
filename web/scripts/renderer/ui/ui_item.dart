@@ -1,18 +1,18 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../game.dart';
-
 class UIItem {
+  static List<UIItem> all;
   Shape shape;
 
   UIItem() {
     shape = new Shape();
+    all.add(this);
   }
 
   void update() {}
 
   void destroy() {
     shape.removeFromParent();
-    Game.renderer.renderableUI.remove(this);
+    all.remove(this);
   }
 }

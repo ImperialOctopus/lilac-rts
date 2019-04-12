@@ -27,9 +27,6 @@ class Game {
     engine = new Engine();
     userInput = new UserInput();
     renderer = new Renderer();
-    renderer.createBackground(
-        new Vector2(stageWidth as double, stageHeight as double),
-        foregroundColor);
 
     engine.streamController.stream.listen((e) => entityCreated(e));
     stage.onEnterFrame.listen(update);

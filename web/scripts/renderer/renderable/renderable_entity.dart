@@ -1,7 +1,7 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../game.dart';
-import '../lavendar/entities/entity.dart';
+import '../../game.dart';
+import '../../lavendar/entities/entity.dart';
 
 class RenderableEntity {
   Entity entity;

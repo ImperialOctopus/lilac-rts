@@ -10,10 +10,10 @@ import 'entity.dart';
 class Unit extends Entity {
   static List<Unit> all;
 
-  double speed = 1.5;
-  double acceleration = 0.3;
-  double fireCooldownTime = 100;
-  double projectileSpeed = 2;
+  double speed = 1;
+  double acceleration = 0.2;
+  double fireCooldownTime = 200;
+  double projectileSpeed = 3;
 
   double fireCooldown;
 
@@ -100,7 +100,9 @@ class Unit extends Entity {
   }
 
   void setFireTarget(Vector2 position) {
-    fireTarget = new Target(TargetType.Fire, position);
+    if (canFire()) {
+      fireTarget = new Target(TargetType.Fire, position);
+    }
   }
 
   bool canFire() {
