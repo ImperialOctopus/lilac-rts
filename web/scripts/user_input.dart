@@ -1,11 +1,13 @@
+import 'dart:html' as HTML;
+
 import 'package:stagexl/stagexl.dart';
 import 'package:vector_math/vector_math.dart';
 import 'game.dart';
 import 'lavendar/entities/entity.dart';
 import 'lavendar/entities/unit.dart';
+import 'lavendar/time.dart';
 
 class UserInput {
-  List<Unit> allUnits;
   List<Unit> selectedUnits;
 
   Vector2 position1;
@@ -13,9 +15,17 @@ class UserInput {
   bool selecting;
 
   UserInput() {
-    allUnits = Unit.all;
     selectedUnits = new List<Unit>();
     selecting = false;
+
+    //// Set up event listeners
+    //   Mouse
+    Game.stage.onMouseDown.listen(startDrag);
+    Game.stage.onMouseUp.listen(stopDrag);
+    Game.stage.onMouseRightDown.listen(setMoveTarget);
+    Game.stage.onMouseMiddleDown.listen(setFireTarget);
+    //   Keyboard
+    HTML.window.onKeyDown.listen(keyDown);
   }
 
   void startDrag(InputEvent e) {
@@ -43,6 +53,26 @@ class UserInput {
     }
   }
 
+  void keyDown(HTML.KeyboardEvent e) {
+    switch (e.keyCode) {
+      case 80: // P
+        {
+          Time.pause();
+          break;
+        }
+      case 79: // O
+        {
+          Time.speedUp();
+          break;
+        }
+      case 73: // I
+        {
+          Time.speedDown();
+          break;
+        }
+    }
+  }
+
   void select() {
     num left = position1.x < position2.x ? position1.x : position2.x;
     num top = position1.y < position2.y ? position1.y : position2.y;
@@ -51,7 +81,7 @@ class UserInput {
     Rectangle selection = Rectangle(left, top, width, height);
 
     selectedUnits = new List<Unit>();
-    for (var unit in allUnits) {
+    for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
         if (selection.contains(unit.position.x, unit.position.y)) {
           selectedUnits.add(unit);

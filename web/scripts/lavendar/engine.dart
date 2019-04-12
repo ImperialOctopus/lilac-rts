@@ -26,8 +26,8 @@ class Engine {
   }
 
   void update() {
-    for (var item in Entity.all) {
-      item.update();
+    for (var e in Entity.all) {
+      e.update();
     }
     ai.update();
   }

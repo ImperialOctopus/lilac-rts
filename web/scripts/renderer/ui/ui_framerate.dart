@@ -11,10 +11,10 @@ class UIFramerate extends UI {
     textField.defaultTextFormat = new TextFormat(
         'Helvetica,Arial', 14, Color.Green,
         bold: true, italic: true);
-    textField.text = "AAAA";
+    textField.text = "";
     textField.x = 10;
     textField.y = 10;
-    textField.width = 920;
+    textField.width = 50;
     textField.height = 20;
     Game.stage.addChild(textField);
   }

@@ -30,10 +30,6 @@ class Game {
 
     engine.streamController.stream.listen((e) => entityCreated(e));
     stage.onEnterFrame.listen(update);
-    stage.onMouseDown.listen(userInput.startDrag);
-    stage.onMouseUp.listen(userInput.stopDrag);
-    stage.onMouseRightDown.listen(userInput.setMoveTarget);
-    stage.onMouseMiddleDown.listen(userInput.setFireTarget);
 
     engine.createUnit(new Vector2(50, 50), Team.Friendly);
     engine.createUnit(new Vector2(50, 100), Team.Friendly);

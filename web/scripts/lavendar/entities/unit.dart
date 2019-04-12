@@ -40,7 +40,7 @@ class Unit extends Entity {
 
   void move() {
     Vector2 diff = targetVelocity - velocity;
-    velocity += Engine.clampVector(diff, acceleration);
+    velocity += Engine.clampVector(diff, acceleration * Time.multiplier);
     velocity = Engine.clampVector(velocity, speed);
     super.move();
     position.x = position.x.clamp(0, stageWidth);

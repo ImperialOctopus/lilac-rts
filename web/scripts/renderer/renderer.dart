@@ -11,6 +11,7 @@ import 'renderable/renderable_unit.dart';
 import 'ui/ui.dart';
 import 'background.dart';
 import 'ui/ui_framerate.dart';
+import 'ui/ui_timemultiplier.dart';
 
 class Renderer {
   Shape unitSelectShape;
@@ -22,6 +23,7 @@ class Renderer {
 
     new Background();
     new UIFramerate();
+    new UITimeMultiplier();
   }
 
   void addUnit(Unit unit) {
