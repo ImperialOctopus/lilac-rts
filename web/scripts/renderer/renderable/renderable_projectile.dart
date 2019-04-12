@@ -3,9 +3,9 @@ import 'package:stagexl/stagexl.dart';
 import '../../lavendar/entities/entity.dart';
 import '../../lavendar/entities/projectile.dart';
 import '../renderer.dart';
-import 'renderable_entity.dart';
+import 'renderable.dart';
 
-class RenderableProjectile extends RenderableEntity {
+class RenderableProjectile extends Renderable {
   Projectile projectile;
 
   RenderableProjectile(this.projectile) : super(projectile);

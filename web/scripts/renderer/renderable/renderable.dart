@@ -1,13 +1,14 @@
 import 'package:stagexl/stagexl.dart';
 
-import '../../game.dart';
 import '../../lavendar/entities/entity.dart';
 
-class RenderableEntity {
+class Renderable {
+  static List<Renderable> all;
   Entity entity;
   Sprite sprite;
 
-  RenderableEntity(this.entity) {
+  Renderable(this.entity) {
+    all.add(this);
     entity.entityDestroyed.stream.listen(destroy);
     sprite = new Sprite();
     loadImage();
@@ -22,6 +23,6 @@ class RenderableEntity {
 
   void destroy(e) {
     sprite.removeFromParent();
-    Game.renderer.renderableEntities.remove(this);
+    all.remove(this);
   }
 }

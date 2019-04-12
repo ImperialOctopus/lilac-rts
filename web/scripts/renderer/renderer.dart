@@ -2,44 +2,34 @@ import 'package:stagexl/stagexl.dart';
 import 'package:vector_math/vector_math.dart';
 
 import '../game.dart';
+import '../lavendar/entities/entity.dart';
 import '../lavendar/entities/projectile.dart';
 import '../lavendar/entities/unit.dart';
-import 'renderable/renderable_entity.dart';
+import 'renderable/renderable.dart';
 import 'renderable/renderable_projectile.dart';
 import 'renderable/renderable_unit.dart';
+import 'ui/ui.dart';
+import 'background.dart';
 import 'ui/ui_framerate.dart';
-import 'ui/ui_item.dart';
 
 class Renderer {
-  List<RenderableEntity> renderableEntities;
-  List<RenderableUnit> renderableUnits;
   Shape unitSelectShape;
-  Shape backgroundShape;
 
   Renderer() {
-    renderableEntities = new List<RenderableEntity>();
-    renderableUnits = new List<RenderableUnit>();
     unitSelectShape = new Shape();
-    UIItem.all = new List<UIItem>();
+    Renderable.all = new List<Renderable>();
+    UI.all = new List<UI>();
 
-    backgroundShape = rectangle(
-        new Vector2(0, 0),
-        new Vector2(stageWidth as double, stageHeight as double),
-        foregroundColor);
-    Game.stage.addChild(backgroundShape);
-
-    UIFramerate a = new UIFramerate();
+    new Background();
+    new UIFramerate();
   }
 
   void addUnit(Unit unit) {
-    RenderableUnit u = new RenderableUnit(unit);
-    renderableEntities.add(u);
-    renderableUnits.add(u);
+    new RenderableUnit(unit);
   }
 
   void addProjectile(Projectile projectile) {
-    RenderableProjectile p = new RenderableProjectile(projectile);
-    renderableEntities.add(p);
+    new RenderableProjectile(projectile);
   }
 
   // Update loop
@@ -51,14 +41,14 @@ class Renderer {
   }
 
   void renderEntities() {
-    for (RenderableEntity re in renderableEntities) {
-      re.update();
-      Game.stage.addChild(re.sprite);
+    for (Renderable r in Renderable.all) {
+      r.update();
+      Game.stage.addChild(r.sprite);
     }
   }
 
   void renderUI() {
-    for (UIItem ui in UIItem.all) {
+    for (UI ui in UI.all) {
       ui.update();
       Game.stage.addChild(ui.shape);
     }
@@ -75,11 +65,11 @@ class Renderer {
     Game.stage.addChild(unitSelectShape);
   }
 
-  // Unit appearance changed
-
   void updateUnits() {
-    for (RenderableUnit ru in renderableUnits) {
-      ru.loadImage();
+    for (Renderable r in Renderable.all) {
+      if (r.entity.entityType == EntityType.Unit) {
+        r.loadImage();
+      }
     }
   }
 

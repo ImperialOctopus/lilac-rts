@@ -2,9 +2,9 @@ import 'package:stagexl/stagexl.dart';
 
 import '../../lavendar/entities/unit.dart';
 import '../renderer.dart';
-import 'ui_item.dart';
+import 'ui.dart';
 
-class UIReload extends UIItem {
+class UIReload extends UI {
   double length = 20;
 
   Unit unit;

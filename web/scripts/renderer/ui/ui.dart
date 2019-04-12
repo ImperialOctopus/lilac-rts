@@ -1,10 +1,10 @@
 import 'package:stagexl/stagexl.dart';
 
-class UIItem {
-  static List<UIItem> all;
+class UI {
+  static List<UI> all;
   Shape shape;
 
-  UIItem() {
+  UI() {
     shape = new Shape();
     all.add(this);
   }

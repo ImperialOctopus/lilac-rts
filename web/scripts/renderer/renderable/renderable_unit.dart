@@ -5,9 +5,9 @@ import '../../lavendar/entities/entity.dart';
 import '../../lavendar/entities/unit.dart';
 import '../renderer.dart';
 import '../ui/ui_reload.dart';
-import 'renderable_entity.dart';
+import 'renderable.dart';
 
-class RenderableUnit extends RenderableEntity {
+class RenderableUnit extends Renderable {
   Unit unit;
   UIReload uiReload;
 
@@ -45,7 +45,7 @@ class RenderableUnit extends RenderableEntity {
   }
 
   void destroy(e) {
-    Game.renderer.renderableUnits.remove(this);
+    Renderable.all.remove(this);
     if (uiReload != null) {
       uiReload.destroy();
     }

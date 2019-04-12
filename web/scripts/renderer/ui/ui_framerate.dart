@@ -1,9 +1,9 @@
 import 'package:stagexl/stagexl.dart';
 
 import '../../game.dart';
-import 'ui_item.dart';
+import 'ui.dart';
 
-class UIFramerate extends UIItem {
+class UIFramerate extends UI {
   TextField textField;
 
   UIFramerate() : super() {
