@@ -6,7 +6,7 @@ import '../renderer.dart';
 import 'ui.dart';
 
 class UISelection extends UI {
-  UISelection() : super() {}
+  UISelection() : super();
 
   void update() {
     shape.graphics.clear();

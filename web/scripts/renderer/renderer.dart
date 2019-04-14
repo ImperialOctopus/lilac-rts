@@ -11,6 +11,7 @@ import 'renderable/renderable_unit.dart';
 import 'ui/ui.dart';
 import 'background.dart';
 import 'ui/ui_framerate.dart';
+import 'ui/ui_selection.dart';
 import 'ui/ui_timemultiplier.dart';
 
 class Renderer {
@@ -24,6 +25,7 @@ class Renderer {
     new Background();
     new UIFramerate();
     new UITimeMultiplier();
+    new UISelection();
   }
 
   void addUnit(Unit unit) {
@@ -39,7 +41,6 @@ class Renderer {
   void update() {
     renderEntities();
     renderUI();
-    renderSelection();
   }
 
   void renderEntities() {
@@ -54,17 +55,6 @@ class Renderer {
       ui.update();
       Game.stage.addChild(ui.shape);
     }
-  }
-
-  void renderSelection() {
-    unitSelectShape.graphics.clear();
-    if (Game.userInput.selecting) {
-      Vector2 mouse = new Vector2(Game.stage.mouseX, Game.stage.mouseY);
-      mouse.clampScalar(0, 600);
-      unitSelectShape =
-          borderedRectangle(Game.userInput.position1, mouse, Color.White);
-    }
-    Game.stage.addChild(unitSelectShape);
   }
 
   void updateUnits() {
