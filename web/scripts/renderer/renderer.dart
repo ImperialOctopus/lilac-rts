@@ -66,7 +66,6 @@ class Renderer {
   }
 
   // Static shapes
-
   static Shape borderedCircle(fill, border, radius) {
     Shape shape = new Shape();
     shape.graphics

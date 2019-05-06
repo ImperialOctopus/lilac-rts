@@ -1,11 +1,6 @@
 class Time {
-  static bool paused;
-  static int speed;
-
-  Time() {
-    paused = false;
-    speed = 5;
-  }
+  static bool paused = false;
+  static int speed = 5;
 
   static double get multiplier {
     if (paused) {

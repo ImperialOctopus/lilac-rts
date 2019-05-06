@@ -2,7 +2,6 @@ import 'package:vector_math/vector_math.dart';
 
 import '../../game.dart';
 import '../collision.dart';
-import '../engine.dart';
 import '../target.dart';
 import '../time.dart';
 import 'entity.dart';
@@ -40,8 +39,8 @@ class Unit extends Entity {
 
   void move() {
     Vector2 diff = targetVelocity - velocity;
-    velocity += Engine.clampVector(diff, acceleration * Time.multiplier);
-    velocity = Engine.clampVector(velocity, speed);
+    velocity += clampVector(diff, acceleration * Time.multiplier);
+    velocity = clampVector(velocity, speed);
     super.move();
     position.x = position.x.clamp(0, stageWidth);
     position.y = position.y.clamp(0, stageHeight);
@@ -107,5 +106,13 @@ class Unit extends Entity {
 
   bool canFire() {
     return (fireCooldown <= 0);
+  }
+
+  Vector2 clampVector(Vector2 vector, double magnitude) {
+    if (vector.length2 > magnitude * magnitude) {
+      return vector.normalized() * magnitude;
+    } else {
+      return vector;
+    }
   }
 }

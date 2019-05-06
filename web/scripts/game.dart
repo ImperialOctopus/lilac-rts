@@ -1,9 +1,9 @@
+import 'dart:html';
+
 import 'package:stagexl/stagexl.dart';
 import 'package:vector_math/vector_math.dart';
 import 'lavendar/engine.dart';
 import 'lavendar/entities/entity.dart';
-import 'lavendar/entities/unit.dart';
-import 'lavendar/target.dart';
 import 'renderer/renderer.dart';
 import 'user_input.dart';
 
@@ -28,8 +28,8 @@ class Game {
     userInput = new UserInput();
     renderer = new Renderer();
 
-    engine.streamController.stream.listen((e) => entityCreated(e));
     stage.onEnterFrame.listen(update);
+    engine.stream.streamController.stream.listen((e) => entityCreated(e));
 
     engine.createUnit(new Vector2(50, 50), Team.Friendly);
     engine.createUnit(new Vector2(50, 100), Team.Friendly);
@@ -47,16 +47,15 @@ class Game {
     renderer.update();
   }
 
-  void entityCreated(Entity e) {
-    switch (e.entityType) {
+  void entityCreated(CustomEvent event) {
+    Entity entity = event.detail;
+    switch (entity.entityType) {
       case EntityType.Unit:
-        renderer.addUnit(e);
+        renderer.addUnit(entity);
         break;
       case EntityType.Projectile:
-        renderer.addProjectile(e);
+        renderer.addProjectile(entity);
         break;
     }
   }
-
-  void submitOrder(Set<Unit> units, Target target, TargetType type) {}
 }
