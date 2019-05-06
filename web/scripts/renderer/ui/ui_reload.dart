@@ -12,8 +12,7 @@ class UIReload extends UI {
   UIReload(this.unit) : super();
 
   void update() {
-    shape.graphics.clear();
-    shape = Renderer.filledBar(
+    sprite.name Renderer.filledBar(
         unit.position,
         3,
         length,
