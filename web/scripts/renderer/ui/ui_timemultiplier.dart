@@ -17,7 +17,8 @@ class UITimeMultiplier extends UI {
     textField.y = 10;
     textField.width = 50;
     textField.height = 20;
-    Game.stage.addChild(textField);
+    sprite.addChild(textField);
+    Game.stage.addChild(sprite);
   }
 
   void update() {

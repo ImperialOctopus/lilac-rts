@@ -17,25 +17,33 @@ const int foregroundColor = Color.CornflowerBlue;
 
 class Game {
   static double deltaTime;
-  static Menu menu;
+
   static Stage stage;
+  static ResourceManager resourceManager;
+
+  static Menu menu;
   static Engine engine;
   static Renderer renderer;
   static UnitSelect unitSelect;
   static Keyboard keyboard;
 
-  Game(_stage) {
+  Game(_stage, _resourceManager) {
     stage = _stage;
+    resourceManager = _resourceManager;
   }
 
-  void start() {
-    startMenu();
-    //startGame();
+  void load() {
+    renderer = new Renderer();
+    keyboard = new Keyboard();
+
+    resourceManager
+      ..addBitmapData('menu_play', 'assets/menu/play.png')
+      ..addBitmapData('ui_move', 'assets/ui/move.png')
+      ..addBitmapData('ui_attack', 'assets/ui/attack.png');
+    resourceManager.load().then((r) => {startMenu()});
   }
 
   void startMenu() {
-    renderer = new Renderer();
-    keyboard = new Keyboard();
     menu = new Menu();
   }
 

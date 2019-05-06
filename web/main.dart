@@ -16,12 +16,7 @@ Future<Null> main() async {
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
   ResourceManager resourceManager = new ResourceManager();
-  resourceManager 
-    ..addBitmapData('menu_play', 'assets/menu/play.png')
-    ..addBitmapData('ui_move', 'assets/ui/move.png')
-    ..addBitmapData('ui_attack', 'assets/ui/attack.png');
-  await resourceManager.load();
 
-  Game game = new Game(stage);
-  game.start();
+  Game game = new Game(stage, resourceManager);
+  game.load();
 }
