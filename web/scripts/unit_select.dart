@@ -1,20 +1,16 @@
-import 'dart:html' as HTML;
-
 import 'package:stagexl/stagexl.dart';
 import 'package:vector_math/vector_math.dart';
 import 'game.dart';
 import 'lavendar/entities/entity.dart';
 import 'lavendar/entities/unit.dart';
-import 'lavendar/time.dart';
 
-class UserInput {
+class UnitSelect {
   List<Unit> selectedUnits;
-
   Vector2 position1;
   Vector2 position2;
   bool selecting;
 
-  UserInput() {
+  UnitSelect() {
     selectedUnits = new List<Unit>();
     selecting = false;
 
@@ -24,8 +20,6 @@ class UserInput {
     Game.stage.onMouseUp.listen(stopDrag);
     Game.stage.onMouseRightDown.listen(setMoveTarget);
     Game.stage.onMouseMiddleDown.listen(setFireTarget);
-    //   Keyboard
-    HTML.window.onKeyDown.listen(keyDown);
   }
 
   void startDrag(InputEvent e) {
@@ -50,26 +44,6 @@ class UserInput {
   void setFireTarget(InputEvent e) {
     for (Unit u in selectedUnits) {
       u.setFireTarget(new Vector2(e.stageX, e.stageY));
-    }
-  }
-
-  void keyDown(HTML.KeyboardEvent e) {
-    switch (e.keyCode) {
-      case 80: // P
-        {
-          Time.pause();
-          break;
-        }
-      case 79: // O
-        {
-          Time.speedUp();
-          break;
-        }
-      case 73: // I
-        {
-          Time.speedDown();
-          break;
-        }
     }
   }
 

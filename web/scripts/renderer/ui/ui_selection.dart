@@ -10,11 +10,11 @@ class UISelection extends UI {
 
   void update() {
     shape.graphics.clear();
-    if (Game.userInput.selecting) {
+    if (Game.unitSelect.selecting) {
       Vector2 mouse = new Vector2(Game.stage.mouseX, Game.stage.mouseY);
       mouse.clampScalar(0, 600);
       shape = Renderer.borderedRectangle(
-          Game.userInput.position1, mouse, Color.White);
+          Game.unitSelect.position1, mouse, Color.White);
     }
   }
 }

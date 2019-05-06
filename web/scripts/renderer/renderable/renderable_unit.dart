@@ -22,7 +22,7 @@ class RenderableUnit extends Renderable {
     sprite.graphics.clear();
     Shape shape;
     if (unit.team == Team.Friendly) {
-      if (Game.userInput.selectedUnits.contains(unit)) {
+      if (Game.unitSelect.selectedUnits.contains(unit)) {
         // Selected friendly
         shape = Renderer.borderedCircle(Color.Black, Color.Orange, 10);
       } else {
@@ -41,7 +41,7 @@ class RenderableUnit extends Renderable {
   }
 
   void onClick(InputEvent e) {
-    Game.userInput.selectUnit(unit);
+    Game.unitSelect.selectUnit(unit);
   }
 
   void destroy(e) {
