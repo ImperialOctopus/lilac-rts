@@ -1,22 +1,9 @@
-import 'dart:async';
-import 'dart:html' as html;
-import 'package:stagexl/stagexl.dart';
+import 'dart:html' hide Point;
+import 'package:pixi/pixi.dart';
 
-import 'scripts/game.dart';
+main() {
+  Application app = new Application(
+      new Options(height: 256, width: 256, backgroundColor: 0x061639));
 
-Future<Null> main() async {
-  StageOptions stageOptions = new StageOptions()
-    ..backgroundColor = backgroundColor
-    ..renderEngine = RenderEngine.WebGL
-    ..inputEventMode = InputEventMode.MouseAndTouch;
-
-  html.Element canvas = html.querySelector('#stage');
-  Stage stage = new Stage(canvas,
-      width: stageHeight, height: stageWidth, options: stageOptions);
-  RenderLoop renderLoop = new RenderLoop();
-  renderLoop.addStage(stage);
-  ResourceManager resourceManager = new ResourceManager();
-
-  Game game = new Game(stage, resourceManager);
-  game.load();
+  document.body.append(app.view);
 }
