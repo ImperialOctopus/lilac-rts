@@ -18,6 +18,8 @@ class Keyboard {
   }
 
   void keyDown(KeyboardEvent e) {
-    bindings[e.keyCode]();
+    if (bindings.containsKey(e.keyCode)) {
+      bindings[e.keyCode]();
+    }
   }
 }
