@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:vector_math/vector_math.dart';
 
 import 'input/keyboard.dart';
+import 'input/unit_select.dart';
 import 'lavendar/renderer.dart';
 import 'lilac/engine.dart';
 import 'lilac/entities/entity.dart';
@@ -12,6 +13,7 @@ class Game {
   static CanvasRenderingContext2D ctx;
 
   Keyboard keyboard;
+  UnitSelect unitSelect;
   Renderer renderer;
 
   static final int stageHeight = 600;
@@ -25,7 +27,8 @@ class Game {
     Engine.load(stageHeight, stageWidth);
 
     keyboard = new Keyboard();
-    renderer = new Renderer(ctx, Engine.allEntities);
+    unitSelect = new UnitSelect();
+    renderer = new Renderer(ctx, Engine.allEntities, unitSelect);
 
     keyboard.addBinding(KeyCode.P, () => {Time.pause()});
     keyboard.addBinding(KeyCode.O, () => {Time.speedUp()});

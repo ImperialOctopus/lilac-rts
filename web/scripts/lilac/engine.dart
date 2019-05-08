@@ -28,7 +28,7 @@ class Engine {
   }
 
   static void start() {
-    Timer.periodic(Duration(milliseconds: 50), Engine.update);
+    Timer.periodic(Duration(milliseconds: 20), Engine.update);
   }
 
   static void update(Timer t) {

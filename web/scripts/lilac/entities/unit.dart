@@ -17,11 +17,10 @@ class Unit extends Entity {
   double fireCooldown;
 
   Vector2 targetVelocity;
-  Team team;
   Target moveTarget;
   Target fireTarget;
 
-  Unit(Vector2 position, this.team) : super(position, Vector2.zero()) {
+  Unit(Vector2 position, Team team) : super(position, Vector2.zero(), team) {
     all.add(this);
 
     targetVelocity = Vector2.zero();

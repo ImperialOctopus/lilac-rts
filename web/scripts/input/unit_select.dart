@@ -11,6 +11,7 @@ class UnitSelect {
   List<Unit> selectedUnits;
   Vector2 position1;
   Vector2 position2;
+  Vector2 mousePosition;
   bool selecting;
 
   UnitSelect() {
@@ -18,21 +19,44 @@ class UnitSelect {
     selecting = false;
 
     Game.ctx.canvas.onMouseDown.listen(mouseDown);
+    Game.ctx.canvas.onMouseUp.listen(mouseUp);
+    Game.ctx.canvas.onContextMenu.listen((MouseEvent e) => e.preventDefault());
+    Game.ctx.canvas.onMouseMove.listen((MouseEvent e) =>
+        {mousePosition = new Vector2(e.offset.x, e.offset.y)});
   }
 
   void mouseDown(MouseEvent e) {
-    print(e);
+    // Left click
+    if (e.button == 0) {
+      startDrag(e);
+    }
+    // Right click
+    else if (e.button == 2) {
+      if (e.ctrlKey) {
+        setFireTarget(e);
+      } else {
+        setMoveTarget(e);
+      }
+    } // Middle click
+    else if (e.button == 1) {
+      setFireTarget(e);
+    }
+  }
+
+  void mouseUp(MouseEvent e) {
+    if (e.button == 0) {
+      stopDrag(e);
+    }
   }
 
   void startDrag(MouseEvent e) {
-    position1 = new Vector2(e.offset.x.clamp(0, Game.stageWidth),
-        e.offset.y.clamp(0, Game.stageHeight));
+    position1 = mousePosition;
+
     selecting = true;
   }
 
   void stopDrag(MouseEvent e) {
-    position2 = new Vector2(e.offset.x.clamp(0, Game.stageWidth),
-        e.offset.y.clamp(0, Game.stageHeight));
+    position2 = mousePosition;
     selecting = false;
     select();
   }
@@ -53,7 +77,7 @@ class UnitSelect {
     Rectangle selection = Rectangle.fromPoints(
         Point(position1.x, position1.y), Point(position2.x, position2.y));
 
-    selectedUnits = new List<Unit>();
+    selectedUnits.clear();
     for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
         if (selection.containsPoint(Point(unit.position.x, unit.position.y))) {
