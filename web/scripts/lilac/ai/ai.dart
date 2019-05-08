@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../../game.dart';
 import '../entities/entity.dart';
 import '../entities/unit.dart';
 
@@ -39,8 +38,8 @@ class AI {
   }
 
   void setRandomMoveTarget(Unit unit) {
-    unit.setMoveTarget(new Vector2(random.nextInt(stageWidth) as double,
-        random.nextInt(stageHeight) as double));
+    unit.setMoveTarget(new Vector2(random.nextInt(Engine.stageHeight) as double,
+        random.nextInt(Engine.stageHeight) as double));
   }
 
   void setClosestFireTarget(Unit unit) {

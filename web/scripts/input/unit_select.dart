@@ -1,8 +1,10 @@
-import 'package:stagexl/stagexl.dart';
+import 'dart:math';
+
 import 'package:vector_math/vector_math.dart';
-import 'game.dart';
-import 'lavendar/entities/entity.dart';
-import 'lavendar/entities/unit.dart';
+
+import '../game.dart';
+import '../lilac/entities/entity.dart';
+import '../lilac/entities/unit.dart';
 
 class UnitSelect {
   List<Unit> selectedUnits;
@@ -20,17 +22,24 @@ class UnitSelect {
     Game.stage.onMouseUp.listen(stopDrag);
     Game.stage.onMouseRightDown.listen(setMoveTarget);
     Game.stage.onMouseMiddleDown.listen(setFireTarget);
+
+    var clientRect = ctx.canvas.getBoundingClientRect();
+
+    ctx.canvas.on.click.add((e) {
+      var x = e.clientX - clientRect.left;
+      var y = e.clientY - clientRect.top;
+    });
   }
 
   void startDrag(InputEvent e) {
-    position1 = new Vector2(
-        e.stageX.clamp(0, stageWidth), e.stageY.clamp(0, stageHeight));
+    position1 = new Vector2(e.stageX.clamp(0, Game.stageWidth),
+        e.stageY.clamp(0, Game.stageHeight));
     selecting = true;
   }
 
   void stopDrag(InputEvent e) {
-    position2 = new Vector2(
-        e.stageX.clamp(0, stageWidth), e.stageY.clamp(0, stageHeight));
+    position2 = new Vector2(e.stageX.clamp(0, Game.stageWidth),
+        e.stageY.clamp(0, Game.stageHeight));
     selecting = false;
     select();
   }
@@ -48,26 +57,21 @@ class UnitSelect {
   }
 
   void select() {
-    num left = position1.x < position2.x ? position1.x : position2.x;
-    num top = position1.y < position2.y ? position1.y : position2.y;
-    num width = (position1.x - position2.x).abs();
-    num height = (position1.y - position2.y).abs();
-    Rectangle selection = Rectangle(left, top, width, height);
+    Rectangle selection = Rectangle.fromPoints(
+        Point(position1.x, position1.y), Point(position2.x, position2.y));
 
     selectedUnits = new List<Unit>();
     for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
-        if (selection.contains(unit.position.x, unit.position.y)) {
+        if (selection.containsPoint(Point(unit.position.x, unit.position.y))) {
           selectedUnits.add(unit);
         }
       }
     }
-    Game.renderer.updateUnits();
   }
 
   void selectUnit(Unit u) {
-    selectedUnits = new List<Unit>();
+    selectedUnits.clear();
     selectedUnits.add(u);
-    Game.renderer.updateUnits();
   }
 }
