@@ -10,25 +10,22 @@ import 'lilac/entities/entity.dart';
 import 'lilac/time.dart';
 
 class Game {
-  static CanvasRenderingContext2D ctx;
+  static CanvasElement canvas;
 
   Keyboard keyboard;
   UnitSelect unitSelect;
   Renderer renderer;
 
-  static final int stageHeight = 600;
-  static final int stageWidth = 600;
-
-  Game(_ctx) {
-    ctx = _ctx;
+  Game(_canvas) {
+    canvas = _canvas;
   }
 
   void start() {
-    Engine.load(stageHeight, stageWidth);
+    Engine.load();
 
     keyboard = new Keyboard();
     unitSelect = new UnitSelect();
-    renderer = new Renderer(ctx, Engine.allEntities, unitSelect);
+    renderer = new Renderer(canvas, Engine.allEntities, unitSelect);
 
     keyboard.addBinding(KeyCode.P, () => {Time.pause()});
     keyboard.addBinding(KeyCode.O, () => {Time.speedUp()});

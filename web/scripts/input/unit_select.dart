@@ -18,10 +18,10 @@ class UnitSelect {
     selectedUnits = new List<Unit>();
     selecting = false;
 
-    Game.ctx.canvas.onMouseDown.listen(mouseDown);
-    Game.ctx.canvas.onMouseUp.listen(mouseUp);
-    Game.ctx.canvas.onContextMenu.listen((MouseEvent e) => e.preventDefault());
-    Game.ctx.canvas.onMouseMove.listen((MouseEvent e) =>
+    Game.canvas.onMouseDown.listen(mouseDown);
+    Game.canvas.onMouseUp.listen(mouseUp);
+    Game.canvas.onContextMenu.listen((MouseEvent e) => e.preventDefault());
+    Game.canvas.onMouseMove.listen((MouseEvent e) =>
         {mousePosition = new Vector2(e.offset.x, e.offset.y)});
   }
 

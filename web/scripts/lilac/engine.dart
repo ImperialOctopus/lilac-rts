@@ -13,13 +13,10 @@ class Engine {
 
   static AI ai;
 
-  static int stageHeight;
-  static int stageWidth;
+  static int stageHeight = 1000;
+  static int stageWidth = 1000;
 
-  static void load(_stageWidth, _stageHeight) {
-    stageWidth = _stageWidth;
-    stageHeight = _stageHeight;
-
+  static void load() {
     Entity.all = new List<Entity>();
     Unit.all = new List<Unit>();
     Projectile.all = new List<Projectile>();

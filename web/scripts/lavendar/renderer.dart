@@ -3,19 +3,22 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../game.dart';
 import '../input/unit_select.dart';
 import '../lilac/entities/entity.dart';
 
 class Renderer {
   final backgroundColour = "#FFFFFF";
+  final stageColour = "#DDDDDD";
 
+  CanvasElement canvas;
   CanvasRenderingContext2D context;
   List<Entity> entityList;
 
   UnitSelect unitSelect;
 
-  Renderer(this.context, this.entityList, this.unitSelect);
+  Renderer(this.canvas, this.entityList, this.unitSelect) {
+    context = canvas.context2D;
+  }
 
   void start() {
     awaitFrame();
@@ -28,12 +31,27 @@ class Renderer {
   void render(num m) {
     clear();
 
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    renderStage();
+
     for (Entity e in entityList) {
       renderEntity(e);
     }
     renderSelection();
 
     awaitFrame();
+  }
+
+  void renderStage() {
+    int dimension = canvas.width > canvas.height ? canvas.height : canvas.width;
+
+    context
+      ..beginPath()
+      ..rect(0, 0, dimension, dimension)
+      ..fillStyle = stageColour
+      ..fill();
   }
 
   void renderEntity(Entity entity) {
@@ -83,7 +101,7 @@ class Renderer {
   void clear() {
     context
       ..beginPath()
-      ..rect(0, 0, Game.stageWidth, Game.stageHeight)
+      ..rect(0, 0, canvas.width, canvas.height)
       ..fillStyle = backgroundColour
       ..fill();
   }
