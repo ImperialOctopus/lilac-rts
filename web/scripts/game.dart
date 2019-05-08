@@ -43,4 +43,24 @@ class Game {
     Engine.start();
     renderer.start();
   }
+
+  static int canvasSize() {
+    if (canvas.width > canvas.height) {
+      return canvas.height;
+    } else {
+      return canvas.width;
+    }
+  }
+
+  static Vector2 canvasOffset() {
+    if (canvas.width > canvas.height) {
+      return new Vector2((canvas.width - canvas.height) / 2, 0);
+    } else {
+      return new Vector2(0, (canvas.height - canvas.width) / 2);
+    }
+  }
+
+  static double renderScale() {
+    return canvasSize() / Engine.stageSize;
+  }
 }

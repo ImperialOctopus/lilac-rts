@@ -39,8 +39,8 @@ class AI {
   }
 
   void setRandomMoveTarget(Unit unit) {
-    unit.setMoveTarget(new Vector2(random.nextInt(Engine.stageHeight) as double,
-        random.nextInt(Engine.stageHeight) as double));
+    unit.setMoveTarget(new Vector2(random.nextInt(Engine.stageSize) as double,
+        random.nextInt(Engine.stageSize) as double));
   }
 
   void setClosestFireTarget(Unit unit) {

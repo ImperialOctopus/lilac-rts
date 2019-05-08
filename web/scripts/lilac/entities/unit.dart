@@ -41,8 +41,8 @@ class Unit extends Entity {
     velocity += clampVector(diff, acceleration * Time.multiplier);
     velocity = clampVector(velocity, speed);
     super.move();
-    position.x = position.x.clamp(0, Engine.stageWidth);
-    position.y = position.y.clamp(0, Engine.stageHeight);
+    position.x = position.x.clamp(0, Engine.stageSize);
+    position.y = position.y.clamp(0, Engine.stageSize);
   }
 
   void destroy() {

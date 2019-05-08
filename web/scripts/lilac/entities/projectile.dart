@@ -22,7 +22,7 @@ class Projectile extends Entity {
     super.move();
     if (!Collision.pointWithinRectangle(
         Vector2.zero(),
-        new Vector2(Engine.stageWidth as double, Engine.stageHeight as double),
+        new Vector2(Engine.stageSize as double, Engine.stageSize as double),
         position)) {
       destroy();
     }

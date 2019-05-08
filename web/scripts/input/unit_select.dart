@@ -1,8 +1,6 @@
 import 'dart:html';
 import 'dart:math';
-
 import 'package:vector_math/vector_math.dart';
-
 import '../game.dart';
 import '../lilac/entities/entity.dart';
 import '../lilac/entities/unit.dart';
@@ -75,16 +73,25 @@ class UnitSelect {
 
   void select() {
     Rectangle selection = Rectangle.fromPoints(
-        Point(position1.x, position1.y), Point(position2.x, position2.y));
+        worldToStage(Point(position1.x, position1.y)),
+        worldToStage(Point(position2.x, position2.y)));
 
     selectedUnits.clear();
     for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
-        if (selection.containsPoint(Point(unit.position.x, unit.position.y))) {
+        if (selection.containsPoint(
+            worldToStage(Point(unit.position.x, unit.position.y)))) {
           selectedUnits.add(unit);
         }
       }
     }
+  }
+
+  Point worldToStage(Point world) {
+    Vector2 offset = Game.canvasOffset();
+    double scale = Game.renderScale();
+    return new Point(
+        (world.x - offset.x) / scale, (world.y - offset.y) / scale);
   }
 
   void selectUnit(Unit u) {

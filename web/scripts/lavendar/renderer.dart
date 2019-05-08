@@ -1,8 +1,7 @@
 import 'dart:html';
 import 'dart:math';
-
 import 'package:vector_math/vector_math.dart';
-
+import '../game.dart';
 import '../input/unit_select.dart';
 import '../lilac/entities/entity.dart';
 
@@ -45,11 +44,11 @@ class Renderer {
   }
 
   void renderStage() {
-    int dimension = canvas.width > canvas.height ? canvas.height : canvas.width;
-
+    Vector2 offset = Game.canvasOffset();
+    int dimension = Game.canvasSize();
     context
       ..beginPath()
-      ..rect(0, 0, dimension, dimension)
+      ..rect(offset.x, offset.y, dimension, dimension)
       ..fillStyle = stageColour
       ..fill();
   }
@@ -77,11 +76,7 @@ class Renderer {
         colour = "#880e4f";
       }
     }
-    context
-      ..beginPath()
-      ..arc(entity.position.x, entity.position.y, radius, 0, 2 * pi)
-      ..fillStyle = colour
-      ..fill();
+    drawCircleWorld(entity.position, radius, colour);
   }
 
   void renderSelection() {
@@ -97,6 +92,19 @@ class Renderer {
         ..stroke();
     }
   }
+
+  void drawCircleWorld(Vector2 position, int radius, String colour) {
+    double scale = Game.renderScale();
+    Vector2 offset = Game.canvasOffset();
+    context
+      ..beginPath()
+      ..arc((position.x * scale) + offset.x, (position.y * scale) + offset.y,
+          radius * scale, 0, 2 * pi)
+      ..fillStyle = colour
+      ..fill();
+  }
+
+  void drawFilledRectWorld() {}
 
   void clear() {
     context
