@@ -7,7 +7,7 @@ CanvasRenderingContext2D ctx;
 
 main() {
   canvas = querySelector('#game-canvas');
-  ctx = canvas.getContext('2d');
+  ctx = canvas.context2D;
 
   new Game(ctx).start();
 }

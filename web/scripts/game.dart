@@ -11,7 +11,6 @@ import 'lilac/time.dart';
 class Game {
   static CanvasRenderingContext2D ctx;
 
-  Engine engine;
   Keyboard keyboard;
   Renderer renderer;
 
@@ -23,10 +22,10 @@ class Game {
   }
 
   void start() {
-    keyboard = new Keyboard();
-    renderer = new Renderer(Engine.stream.streamController.stream);
-
     Engine.load(stageHeight, stageWidth);
+
+    keyboard = new Keyboard();
+    renderer = new Renderer(ctx, Engine.allEntities);
 
     keyboard.addBinding(KeyCode.P, () => {Time.pause()});
     keyboard.addBinding(KeyCode.O, () => {Time.speedUp()});
@@ -42,5 +41,6 @@ class Game {
     Engine.createUnit(new Vector2(550, 550), Team.Enemy);
 
     Engine.start();
+    renderer.start();
   }
 }
