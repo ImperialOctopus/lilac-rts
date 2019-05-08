@@ -6,10 +6,13 @@ import 'entities/unit.dart';
 import 'event_stream.dart';
 
 class Engine {
-  AI ai;
   EventStream stream;
+  AI ai;
 
-  Engine() {
+  int stageHeight;
+  int stageWidth;
+
+  Engine(this.stageWidth, this.stageHeight) {
     Entity.all = new List<Entity>();
     Unit.all = new List<Unit>();
     Projectile.all = new List<Projectile>();
