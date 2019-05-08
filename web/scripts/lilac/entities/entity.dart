@@ -6,20 +6,21 @@ import '../collision.dart';
 import '../time.dart';
 
 enum EntityType { Unit, Projectile }
-enum Team { Friendly, Enemy }
+enum Team { Friendly, Enemy, Neutral }
 
 class Entity {
   static List<Entity> all;
 
   StreamController entityDestroyed;
   EntityType entityType;
+  Team team;
 
   Vector2 velocity;
   Vector2 position;
   int radius = 10;
   int mass;
 
-  Entity(this.position, this.velocity) {
+  Entity(this.position, this.velocity, this.team) {
     all.add(this);
     entityDestroyed = new StreamController();
   }

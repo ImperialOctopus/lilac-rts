@@ -7,10 +7,9 @@ import 'unit.dart';
 
 class Projectile extends Entity {
   static List<Projectile> all;
-  Team team;
 
-  Projectile(Vector2 position, Vector2 velocity, this.team)
-      : super(position, velocity) {
+  Projectile(Vector2 position, Vector2 velocity, Team team)
+      : super(position, velocity, team) {
     all.add(this);
     this.entityType = EntityType.Projectile;
   }
