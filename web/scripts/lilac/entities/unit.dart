@@ -1,7 +1,7 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../../game.dart';
 import '../collision.dart';
+import '../engine.dart';
 import '../target.dart';
 import '../time.dart';
 import 'entity.dart';
@@ -42,8 +42,8 @@ class Unit extends Entity {
     velocity += clampVector(diff, acceleration * Time.multiplier);
     velocity = clampVector(velocity, speed);
     super.move();
-    position.x = position.x.clamp(0, stageWidth);
-    position.y = position.y.clamp(0, stageHeight);
+    position.x = position.x.clamp(0, Engine.stageWidth);
+    position.y = position.y.clamp(0, Engine.stageHeight);
   }
 
   void destroy() {
@@ -87,7 +87,7 @@ class Unit extends Entity {
       fireTarget.isSet = false;
       Vector2 v =
           (fireTarget.position - position).normalized() * projectileSpeed;
-      Game.engine.createProjectile(position, v, team);
+      Engine.createProjectile(position, v, team);
     }
     if (fireCooldown > 0) {
       fireCooldown -= 1 * Time.multiplier;

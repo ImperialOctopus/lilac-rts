@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
+import '../engine.dart';
 import '../entities/entity.dart';
 import '../entities/unit.dart';
 

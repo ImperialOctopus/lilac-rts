@@ -1,7 +1,7 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../../game.dart';
 import '../collision.dart';
+import '../engine.dart';
 import 'entity.dart';
 import 'unit.dart';
 
@@ -21,8 +21,10 @@ class Projectile extends Entity {
 
   void move() {
     super.move();
-    if (!Collision.pointWithinRectangle(Vector2.zero(),
-        new Vector2(stageWidth as double, stageHeight as double), position)) {
+    if (!Collision.pointWithinRectangle(
+        Vector2.zero(),
+        new Vector2(Engine.stageWidth as double, Engine.stageHeight as double),
+        position)) {
       destroy();
     }
   }

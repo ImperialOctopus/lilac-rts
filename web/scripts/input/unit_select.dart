@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
@@ -16,43 +17,35 @@ class UnitSelect {
     selectedUnits = new List<Unit>();
     selecting = false;
 
-    //// Set up event listeners
-    //   Mouse
-    Game.stage.onMouseDown.listen(startDrag);
-    Game.stage.onMouseUp.listen(stopDrag);
-    Game.stage.onMouseRightDown.listen(setMoveTarget);
-    Game.stage.onMouseMiddleDown.listen(setFireTarget);
-
-    var clientRect = ctx.canvas.getBoundingClientRect();
-
-    ctx.canvas.on.click.add((e) {
-      var x = e.clientX - clientRect.left;
-      var y = e.clientY - clientRect.top;
-    });
+    Game.ctx.canvas.onMouseDown.listen(mouseDown);
   }
 
-  void startDrag(InputEvent e) {
-    position1 = new Vector2(e.stageX.clamp(0, Game.stageWidth),
-        e.stageY.clamp(0, Game.stageHeight));
+  void mouseDown(MouseEvent e) {
+    print(e);
+  }
+
+  void startDrag(MouseEvent e) {
+    position1 = new Vector2(e.offset.x.clamp(0, Game.stageWidth),
+        e.offset.y.clamp(0, Game.stageHeight));
     selecting = true;
   }
 
-  void stopDrag(InputEvent e) {
-    position2 = new Vector2(e.stageX.clamp(0, Game.stageWidth),
-        e.stageY.clamp(0, Game.stageHeight));
+  void stopDrag(MouseEvent e) {
+    position2 = new Vector2(e.offset.x.clamp(0, Game.stageWidth),
+        e.offset.y.clamp(0, Game.stageHeight));
     selecting = false;
     select();
   }
 
-  void setMoveTarget(InputEvent e) {
+  void setMoveTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setMoveTarget(new Vector2(e.stageX, e.stageY));
+      u.setMoveTarget(new Vector2(e.offset.x, e.offset.y));
     }
   }
 
-  void setFireTarget(InputEvent e) {
+  void setFireTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setFireTarget(new Vector2(e.stageX, e.stageY));
+      u.setFireTarget(new Vector2(e.offset.x, e.offset.y));
     }
   }
 
