@@ -9,6 +9,8 @@ import 'lilac/entities/entity.dart';
 import 'lilac/time.dart';
 
 class Game {
+  static CanvasRenderingContext2D ctx;
+
   Engine engine;
   Keyboard keyboard;
   Renderer renderer;
@@ -16,28 +18,29 @@ class Game {
   static final int stageHeight = 600;
   static final int stageWidth = 600;
 
-  Game() {}
+  Game(_ctx) {
+    ctx = _ctx;
+  }
 
   void start() {
     keyboard = new Keyboard();
-    engine = new Engine(stageHeight, stageWidth);
-    renderer = new Renderer(engine.stream.streamController.stream);
+    renderer = new Renderer(Engine.stream.streamController.stream);
+
+    Engine.load(stageHeight, stageWidth);
 
     keyboard.addBinding(KeyCode.P, () => {Time.pause()});
     keyboard.addBinding(KeyCode.O, () => {Time.speedUp()});
     keyboard.addBinding(KeyCode.I, () => {Time.speedDown()});
 
-    engine.createUnit(new Vector2(50, 50), Team.Friendly);
-    engine.createUnit(new Vector2(50, 100), Team.Friendly);
-    engine.createUnit(new Vector2(100, 50), Team.Friendly);
-    engine.createUnit(new Vector2(100, 100), Team.Friendly);
-    engine.createUnit(new Vector2(500, 500), Team.Enemy);
-    engine.createUnit(new Vector2(500, 550), Team.Enemy);
-    engine.createUnit(new Vector2(550, 500), Team.Enemy);
-    engine.createUnit(new Vector2(550, 550), Team.Enemy);
-  }
+    Engine.createUnit(new Vector2(50, 50), Team.Friendly);
+    Engine.createUnit(new Vector2(50, 100), Team.Friendly);
+    Engine.createUnit(new Vector2(100, 50), Team.Friendly);
+    Engine.createUnit(new Vector2(100, 100), Team.Friendly);
+    Engine.createUnit(new Vector2(500, 500), Team.Enemy);
+    Engine.createUnit(new Vector2(500, 550), Team.Enemy);
+    Engine.createUnit(new Vector2(550, 500), Team.Enemy);
+    Engine.createUnit(new Vector2(550, 550), Team.Enemy);
 
-  void update() {
-    engine.update();
+    Engine.start();
   }
 }

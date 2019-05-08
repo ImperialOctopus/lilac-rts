@@ -6,13 +6,15 @@ import 'entities/unit.dart';
 import 'event_stream.dart';
 
 class Engine {
-  EventStream stream;
-  AI ai;
+  static EventStream stream;
+  static AI ai;
 
-  int stageHeight;
-  int stageWidth;
+  static int stageHeight;
+  static int stageWidth;
 
-  Engine(this.stageWidth, this.stageHeight) {
+  static void load(_stageWidth, _stageHeight) {
+    stageWidth = _stageWidth;
+    stageHeight = _stageHeight;
     Entity.all = new List<Entity>();
     Unit.all = new List<Unit>();
     Projectile.all = new List<Projectile>();
@@ -20,18 +22,20 @@ class Engine {
     stream = new EventStream();
   }
 
-  void update() {
+  static void start() {}
+
+  static void update() {
     for (var e in Entity.all) {
       e.update();
     }
     ai.update();
   }
 
-  createUnit(Vector2 position, Team team) {
+  static createUnit(Vector2 position, Team team) {
     stream.add(new Unit(position, team));
   }
 
-  createProjectile(Vector2 position, Vector2 velocity, Team team) {
+  static createProjectile(Vector2 position, Vector2 velocity, Team team) {
     stream.add(new Projectile(position, velocity, team));
   }
 }

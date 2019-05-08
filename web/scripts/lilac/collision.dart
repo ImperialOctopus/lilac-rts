@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:stagexl/stagexl.dart';
 
 import 'package:vector_math/vector_math.dart';
 
@@ -40,7 +39,7 @@ class Collision {
 
   static bool pointWithinRectangle(Vector2 a, Vector2 b, Vector2 p) {
     Rectangle rectangle = rectFromPoints(a, b);
-    return rectangle.contains(p.x, p.y);
+    return rectangle.containsPoint(Point(p.x, p.y));
   }
 
   static Rectangle rectFromPoints(Vector2 a, Vector2 b) {
