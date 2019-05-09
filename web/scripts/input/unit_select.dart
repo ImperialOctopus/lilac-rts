@@ -19,8 +19,9 @@ class UnitSelect {
     Game.canvas.onMouseDown.listen(mouseDown);
     Game.canvas.onMouseUp.listen(mouseUp);
     Game.canvas.onContextMenu.listen((MouseEvent e) => e.preventDefault());
-    Game.canvas.onMouseMove.listen((MouseEvent e) =>
-        {mousePosition = new Vector2(e.offset.x, e.offset.y)});
+    Game.canvas.onMouseMove.listen((MouseEvent e) {
+      mousePosition = new Vector2(e.offset.x, e.offset.y);
+    });
   }
 
   void mouseDown(MouseEvent e) {

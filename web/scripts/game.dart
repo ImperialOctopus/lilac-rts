@@ -27,9 +27,9 @@ class Game {
     unitSelect = new UnitSelect();
     renderer = new Renderer(canvas, Engine.allEntities, unitSelect);
 
-    keyboard.addBinding(KeyCode.P, () => {Time.pause()});
-    keyboard.addBinding(KeyCode.O, () => {Time.speedUp()});
-    keyboard.addBinding(KeyCode.I, () => {Time.speedDown()});
+    keyboard.addBinding(KeyCode.P, () => Time.pause());
+    keyboard.addBinding(KeyCode.O, () => Time.speedUp());
+    keyboard.addBinding(KeyCode.I, () => Time.speedDown());
 
     Engine.createUnit(new Vector2(50, 50), Team.Friendly);
     Engine.createUnit(new Vector2(50, 100), Team.Friendly);
