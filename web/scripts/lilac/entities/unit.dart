@@ -20,6 +20,10 @@ class Unit extends Entity {
   Target moveTarget;
   Target fireTarget;
 
+  double get fireCooldownFraction {
+    return fireCooldown / fireCooldownTime;
+  }
+
   Unit(Vector2 position, Team team) : super(position, Vector2.zero(), team) {
     all.add(this);
 

@@ -4,6 +4,7 @@ import 'package:vector_math/vector_math.dart';
 import '../game.dart';
 import '../input/unit_select.dart';
 import '../lilac/entities/entity.dart';
+import '../lilac/entities/unit.dart';
 
 class Renderer {
   final backgroundColour = "#FFFFFF";
@@ -37,6 +38,7 @@ class Renderer {
 
     for (Entity e in entityList) {
       renderEntity(e);
+      renderReloadBar(e);
     }
     renderSelection();
 
@@ -54,7 +56,7 @@ class Renderer {
   }
 
   void renderEntity(Entity entity) {
-    int radius;
+    double radius;
     String colour;
 
     if (entity.entityType == EntityType.Unit) {
@@ -76,7 +78,16 @@ class Renderer {
         colour = "#880e4f";
       }
     }
-    drawCircleWorld(entity.position, radius, colour);
+    drawCircle(entity.position, radius, colour);
+  }
+
+  void renderReloadBar(Entity entity) {
+    if (entity.entityType == EntityType.Unit &&
+        entity.team == Team.Friendly &&
+        !(entity as Unit).canFire()) {
+      drawCircleSegment(entity.position, 7,
+          1 - (entity as Unit).fireCooldownFraction, "#0d47a1");
+    }
   }
 
   void renderSelection() {
@@ -93,18 +104,29 @@ class Renderer {
     }
   }
 
-  void drawCircleWorld(Vector2 position, int radius, String colour) {
-    double scale = Game.renderScale();
-    Vector2 offset = Game.canvasOffset();
+  void drawCircle(Vector2 position, double radius, String colour) {
+    position = Game.stageToWorld(position);
+    radius *= Game.renderScale();
     context
       ..beginPath()
-      ..arc((position.x * scale) + offset.x, (position.y * scale) + offset.y,
-          radius * scale, 0, 2 * pi)
+      ..arc(position.x, position.y, radius, 0, 2 * pi)
       ..fillStyle = colour
       ..fill();
   }
 
-  void drawFilledRectWorld() {}
+  void drawCircleSegment(
+      Vector2 position, double radius, double fraction, String colour) {
+    position = Game.stageToWorld(position);
+    radius *= Game.renderScale();
+    context
+      ..beginPath()
+      ..arc(position.x, position.y, radius, 3 / 2 * pi,
+          3 / 2 * pi + (2 * pi * fraction))
+      ..lineTo(position.x, position.y)
+      ..lineTo(position.x, position.y - radius)
+      ..fillStyle = colour
+      ..fill();
+  }
 
   void clear() {
     context

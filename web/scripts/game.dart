@@ -63,4 +63,22 @@ class Game {
   static double renderScale() {
     return canvasSize() / Engine.stageSize;
   }
+
+  static Vector2 worldToStage(Vector2 world) {
+    Vector2 offset = canvasOffset();
+    double scale = renderScale();
+    return new Vector2(
+        (world.x - offset.x) / scale, (world.y - offset.y) / scale);
+  }
+
+  static Vector2 stageToWorld(Vector2 stage) {
+    Vector2 offset = canvasOffset();
+    double scale = renderScale();
+    return new Vector2(
+        (stage.x * scale) + offset.x, (stage.y * scale) + offset.y);
+  }
+
+  static Point v2Point(Vector2 v) {
+    return Point(v.x, v.y);
+  }
 }

@@ -61,41 +61,33 @@ class UnitSelect {
 
   void setMoveTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setMoveTarget(new Vector2(e.offset.x, e.offset.y));
+      u.setMoveTarget(Game.worldToStage(new Vector2(e.offset.x, e.offset.y)));
     }
   }
 
   void setFireTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setFireTarget(new Vector2(e.offset.x, e.offset.y));
+      u.setFireTarget(Game.worldToStage(new Vector2(e.offset.x, e.offset.y)));
     }
   }
 
   void select() {
     Rectangle selection = Rectangle.fromPoints(
-        worldToStage(Point(position1.x, position1.y)),
-        worldToStage(Point(position2.x, position2.y)));
-
+        Game.v2Point(Game.worldToStage(position1)), Game.v2Point(Game.worldToStage(position2)));
     selectedUnits.clear();
     for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
-        if (selection.containsPoint(
-            worldToStage(Point(unit.position.x, unit.position.y)))) {
+        if (selection.containsPoint(Game.v2Point(unit.position))) {
           selectedUnits.add(unit);
         }
       }
     }
   }
 
-  Point worldToStage(Point world) {
-    Vector2 offset = Game.canvasOffset();
-    double scale = Game.renderScale();
-    return new Point(
-        (world.x - offset.x) / scale, (world.y - offset.y) / scale);
-  }
-
   void selectUnit(Unit u) {
     selectedUnits.clear();
     selectedUnits.add(u);
   }
+
+  
 }
