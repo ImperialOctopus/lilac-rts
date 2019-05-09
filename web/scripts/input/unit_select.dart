@@ -73,7 +73,8 @@ class UnitSelect {
 
   void select() {
     Rectangle selection = Rectangle.fromPoints(
-        Game.v2Point(Game.worldToStage(position1)), Game.v2Point(Game.worldToStage(position2)));
+        Game.v2Point(Game.worldToStage(position1)),
+        Game.v2Point(Game.worldToStage(position2)));
     selectedUnits.clear();
     for (var unit in Unit.all) {
       if (unit.team == Team.Friendly) {
@@ -88,6 +89,4 @@ class UnitSelect {
     selectedUnits.clear();
     selectedUnits.add(u);
   }
-
-  
 }
