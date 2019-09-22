@@ -3,26 +3,28 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../game.dart';
-import '../lilac/entities/entity.dart';
-import '../lilac/entities/unit.dart';
+import '../lilac-game.dart';
+import '../stage/unit.dart';
 
 class UnitSelect {
+  LilacGame game;
   List<Unit> selectedUnits;
   Vector2 position1;
   Vector2 position2;
   Vector2 mousePosition;
   bool selecting;
 
-  UnitSelect() {
-    selectedUnits = new List<Unit>();
+  UnitSelect(this.game) {
+    selectedUnits = List<Unit>();
     selecting = false;
 
-    Game.ctx.canvas.onMouseDown.listen(mouseDown);
-    Game.ctx.canvas.onMouseUp.listen(mouseUp);
-    Game.ctx.canvas.onContextMenu.listen((MouseEvent e) => e.preventDefault());
-    Game.ctx.canvas.onMouseMove.listen((MouseEvent e) =>
-        {mousePosition = new Vector2(e.offset.x, e.offset.y)});
+    game.context.canvas.onMouseDown.listen(mouseDown);
+    game.context.canvas.onMouseUp.listen(mouseUp);
+    game.context.canvas.onContextMenu
+        .listen((MouseEvent e) => e.preventDefault());
+    game.context.canvas.onMouseMove.listen((MouseEvent e) {
+      mousePosition = Vector2(e.offset.x, e.offset.y);
+    });
   }
 
   void mouseDown(MouseEvent e) {
@@ -63,13 +65,13 @@ class UnitSelect {
 
   void setMoveTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setMoveTarget(new Vector2(e.offset.x, e.offset.y));
+      u.setMoveTarget(Vector2(e.offset.x, e.offset.y));
     }
   }
 
   void setFireTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setFireTarget(new Vector2(e.offset.x, e.offset.y));
+      u.setFireTarget(Vector2(e.offset.x, e.offset.y));
     }
   }
 
@@ -78,7 +80,7 @@ class UnitSelect {
         Point(position1.x, position1.y), Point(position2.x, position2.y));
 
     selectedUnits.clear();
-    for (var unit in Unit.all) {
+    for (var unit in game.currentStage.units) {
       if (unit.team == Team.Friendly) {
         if (selection.containsPoint(Point(unit.position.x, unit.position.y))) {
           selectedUnits.add(unit);

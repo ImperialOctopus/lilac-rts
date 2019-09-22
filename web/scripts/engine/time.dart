@@ -1,8 +1,8 @@
 class Time {
-  static bool paused = false;
-  static int speed = 5;
+  bool paused = false;
+  int speed = 5;
 
-  static double get multiplier {
+  double get multiplier {
     if (paused) {
       return 0;
     } else {
@@ -10,15 +10,15 @@ class Time {
     }
   }
 
-  static void pause() {
+  void pause() {
     paused = !paused;
   }
 
-  static void speedUp() {
+  void speedUp() {
     speed = (speed + 1).clamp(0, 5);
   }
 
-  static void speedDown() {
+  void speedDown() {
     speed = (speed - 1).clamp(0, 5);
   }
 }

@@ -21,7 +21,7 @@ class Collision {
         ((a.x * b.radius) + (b.x * a.radius)) / (a.radius + b.radius);
     double collisionPointY =
         ((a.y * b.radius) + (b.y * a.radius)) / (a.radius + b.radius);
-    return new Vector2(collisionPointX, collisionPointY);
+    return Vector2(collisionPointX, collisionPointY);
   }
 
   static bool circlePoint(Circle a, Vector2 p) {

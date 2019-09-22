@@ -1,13 +1,11 @@
 import 'dart:html';
 
-import 'scripts/game.dart';
+import 'scripts/lilac-game.dart';
 
 CanvasElement canvas;
-CanvasRenderingContext2D ctx;
 
 main() {
   canvas = querySelector('#game-canvas');
-  ctx = canvas.context2D;
 
-  new Game(ctx).start();
+  LilacGame(canvas.context2D)..start();
 }

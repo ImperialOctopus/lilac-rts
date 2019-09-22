@@ -6,11 +6,11 @@ class Keyboard {
 
   Keyboard() {
     window.onKeyDown.listen(keyDown);
-    bindings = new Map<int, Function>();
+    bindings = Map<int, Function>();
   }
 
   void addBinding(int i, Function f) {
-    bindings.addAll(<int, Function>{i: f});
+    bindings[i] = f;
   }
 
   void removeBinding(int i) {
