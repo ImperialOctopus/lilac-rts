@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'scripts/lilac-game.dart';
+import 'scripts/lilac_game.dart';
 
 CanvasElement canvas;
 

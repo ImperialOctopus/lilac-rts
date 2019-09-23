@@ -1,5 +1,5 @@
-import '../lilac-game.dart';
-import '../stage/game-object.dart';
+import '../lilac_game.dart';
+import '../stage/game_object.dart';
 import '../stage/stage.dart';
 import 'time.dart';
 

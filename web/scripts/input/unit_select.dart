@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../lilac-game.dart';
+import '../lilac_game.dart';
 import '../stage/unit.dart';
 
 class UnitSelect {
@@ -17,7 +17,9 @@ class UnitSelect {
   UnitSelect(this.game) {
     selectedUnits = List<Unit>();
     selecting = false;
+  }
 
+  void start() {
     game.context.canvas.onMouseDown.listen(mouseDown);
     game.context.canvas.onMouseUp.listen(mouseUp);
     game.context.canvas.onContextMenu

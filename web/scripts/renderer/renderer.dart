@@ -1,20 +1,23 @@
+import 'dart:math';
+
 import 'package:vector_math/vector_math.dart';
 
-import '../lilac-game.dart';
-import '../stage/game-object.dart';
+import '../lilac_game.dart';
+import '../stage/game_object.dart';
 import '../stage/stage.dart';
+import 'shape.dart';
 
 class Renderer {
-  Renderer(this.game);
-
   LilacGame game;
+
+  Renderer(this.game);
 
   void start() {}
 
-  Future<void> render(Stage stage) async {
-    await renderBase(stage);
-    await renderStage(stage);
-    await renderUI(stage);
+  void render(Stage stage) {
+    renderBase(stage);
+    renderStage(stage);
+    renderUI(stage);
   }
 
   void renderBase(Stage stage) {
@@ -26,9 +29,22 @@ class Renderer {
   }
 
   void renderStage(Stage stage) {
+    Vector2 offset = stage.cameraPosition;
     stage.gameObjects.forEach((GameObject gameObject) {
-      gameObject.render();
+      gameObject
+          .renderShapes()
+          .forEach((Shape s) => renderShape(gameObject.position + offset, s));
     });
+  }
+
+  void renderShape(Vector2 position, Shape shape) {
+    if (shape.type == ShapeType.Circle) {
+      game.context
+        ..beginPath()
+        ..arc(position.x, position.y, shape.radius, 0, 2 * pi)
+        ..fillStyle = shape.color
+        ..fill();
+    }
   }
 
   void renderUI(Stage stage) {
@@ -47,37 +63,5 @@ class Renderer {
         ..lineWidth = 2
         ..stroke();
     }
-  }
-
-  void renderObject(GameObject gameObject) {
-    /*
-    int radius;
-    String colour;
-
-    if (entity.entityType == EntityType.Unit) {
-      radius = 10;
-      if (entity.team == Team.Friendly) {
-        if (unitSelect.selectedUnits.contains(entity)) {
-          colour = "#64b5f6";
-        } else {
-          colour = "#2196f3";
-        }
-      } else {
-        colour = "#c2185b";
-      }
-    } else if (entity.entityType == EntityType.Projectile) {
-      radius = 3;
-      if (entity.team == Team.Friendly) {
-        colour = "#000000";
-      } else {
-        colour = "#880e4f";
-      }
-    }
-    context
-      ..beginPath()
-      ..arc(entity.position.x, entity.position.y, radius, 0, 2 * pi)
-      ..fillStyle = colour
-      ..fill();
-      */
   }
 }

@@ -1,6 +1,7 @@
 import 'package:vector_math/vector_math.dart';
 
-import 'game-object.dart';
+import '../renderer/shape.dart';
+import 'game_object.dart';
 import 'stage.dart';
 
 enum Team { Friendly, Enemy }
@@ -23,6 +24,7 @@ class Unit implements GameObject {
   Vector2 fireTarget;
 
   Unit(this.position, this.team, this.stage) {
+    velocity = Vector2.zero();
     targetVelocity = Vector2.zero();
     fireCooldown = 0;
   }
@@ -47,7 +49,8 @@ class Unit implements GameObject {
   void move(double timeScale) {
     Vector2 diff = targetVelocity - velocity;
     velocity += clampVector(diff, acceleration * timeScale);
-    velocity = clampVector(velocity, speed * timeScale);
+    velocity = clampVector(velocity, speed);
+    position += velocity * timeScale;
     position.x = position.x.clamp(0, stage.width);
     position.y = position.y.clamp(0, stage.width);
   }
@@ -74,6 +77,13 @@ class Unit implements GameObject {
     fireTarget = position;
   }
 
+  bool selected() {
+    if (team != Team.Friendly) {
+      return false;
+    }
+    return stage.game.input.unitSelect.selectedUnits.contains(this);
+  }
+
   bool canFire() {
     return (fireCooldown <= 0);
   }
@@ -86,7 +96,13 @@ class Unit implements GameObject {
     }
   }
 
-  void render() {
-    // TODO: implement render
+  List<Shape> renderShapes() {
+    if (selected()) {
+      return [Shape(ShapeType.Circle, 10, "#64b5f6")];
+    } else if (team == Team.Friendly) {
+      return [Shape(ShapeType.Circle, 10, "#2196f3")];
+    } else {
+      return [Shape(ShapeType.Circle, 10, "#c2185b")];
+    }
   }
 }

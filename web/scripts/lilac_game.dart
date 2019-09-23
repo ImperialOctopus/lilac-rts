@@ -1,10 +1,13 @@
 import 'dart:html';
 import 'dart:async';
 
+import 'package:vector_math/vector_math.dart';
+
 import 'engine/engine.dart';
 import 'input/input.dart';
 import 'renderer/renderer.dart';
 import 'stage/stage.dart';
+import 'stage/unit.dart';
 
 class LilacGame {
   LilacGame(this.context) {
@@ -20,19 +23,22 @@ class LilacGame {
   Stage currentStage;
 
   void start() {
-    currentStage = Stage(600, 600, "#6495ED");
+    //#6495ED
+    currentStage = Stage(600, 600, "#EEEEEE", this);
+    currentStage.addUnit(Team.Friendly, Vector2(50, 50));
 
     engine.start();
     renderer.start();
     input.start();
 
     renderLoop();
-    Timer.periodic(Duration(milliseconds: 100), engineLoop);
+    Timer.periodic(Duration(milliseconds: 20), engineLoop);
   }
 
   Future<void> renderLoop() async {
     while (true) {
       await window.animationFrame;
+      await input.update();
       await renderer.render(currentStage);
     }
   }

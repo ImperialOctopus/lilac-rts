@@ -1,25 +1,54 @@
 import 'dart:html';
 
 class Keyboard {
-  Map bindings;
+  Map<int, Function> pressBindings;
+  Map<int, Function> holdBindings;
+  Set<int> keysHeld;
   KeyCode keyCode;
 
   Keyboard() {
+    pressBindings = Map<int, Function>();
+    holdBindings = Map<int, Function>();
+    keysHeld = Set<int>();
+  }
+
+  void start() {
     window.onKeyDown.listen(keyDown);
-    bindings = Map<int, Function>();
+    window.onKeyUp.listen(keyUp);
   }
 
-  void addBinding(int i, Function f) {
-    bindings[i] = f;
-  }
-
-  void removeBinding(int i) {
-    bindings.remove(i);
+  void update() {
+    holdBindings.forEach((i, f) {
+      if (keysHeld.contains(i)) {
+        f();
+      }
+    });
   }
 
   void keyDown(KeyboardEvent e) {
-    if (bindings.containsKey(e.keyCode)) {
-      bindings[e.keyCode]();
+    if (pressBindings.containsKey(e.keyCode)) {
+      pressBindings[e.keyCode]();
     }
+    keysHeld.add(e.keyCode);
+  }
+
+  void keyUp(KeyboardEvent e) {
+    keysHeld.remove(e.keyCode);
+  }
+
+  void addBinding(int i, Function f) {
+    pressBindings[i] = f;
+  }
+
+  void removeBinding(int i) {
+    pressBindings.remove(i);
+  }
+
+  void addHold(int i, Function f) {
+    holdBindings[i] = f;
+  }
+
+  void removeHold(int i, Function f) {
+    holdBindings.remove(i);
   }
 }
