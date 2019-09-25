@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:vector_math/vector_math.dart';
 
 import '../lilac_game.dart';
@@ -31,6 +33,12 @@ class Stage {
 
   List<GameObject> get gameObjects {
     return [...units, ...projectiles, ...entities, ...obstacles];
+  }
+
+  Vector2 randomPosition() {
+    Random random = Random();
+    return Vector2(
+        random.nextInt(width).toDouble(), random.nextInt(height).toDouble());
   }
 
   void addUnit(Unit unit) {

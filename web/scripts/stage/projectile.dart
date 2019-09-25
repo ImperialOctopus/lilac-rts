@@ -12,7 +12,7 @@ class Projectile implements GameObject {
   Team team;
   Stage stage;
 
-  int radius = 2;
+  int radius = 5;
 
   Projectile(this.position, this.velocity, this.team);
 
@@ -38,9 +38,9 @@ class Projectile implements GameObject {
 
   List<Shape> renderShapes() {
     if (team == Team.Friendly) {
-      return [Shape(ShapeType.Circle, 3, "#000000")];
+      return [Shape(ShapeType.Circle, radius, "#000000")];
     } else {
-      return [Shape(ShapeType.Circle, 3, "#880e4f")];
+      return [Shape(ShapeType.Circle, radius, "#880e4f")];
     }
   }
 
