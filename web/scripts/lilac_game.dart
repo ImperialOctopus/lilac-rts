@@ -26,6 +26,8 @@ class LilacGame {
     //#6495ED
     currentStage = Stage(600, 600, "#EEEEEE", this);
     currentStage.addUnit(Team.Friendly, Vector2(50, 50));
+    currentStage.addUnit(Team.Friendly, Vector2(100, 50));
+    currentStage.addUnit(Team.Enemy, Vector2(100, 100));
 
     engine.start();
     renderer.start();

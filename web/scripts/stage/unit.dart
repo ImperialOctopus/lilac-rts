@@ -1,5 +1,7 @@
 import 'package:vector_math/vector_math.dart';
-
+import '../engine/ai/unit_ai.dart';
+import '../engine/collision.dart';
+import '../engine/helper.dart';
 import '../renderer/shape.dart';
 import 'game_object.dart';
 import 'stage.dart';
@@ -7,6 +9,8 @@ import 'stage.dart';
 enum Team { Friendly, Enemy }
 
 class Unit implements GameObject {
+  int radius = 20;
+
   double speed = 1;
   double acceleration = 0.2;
   double fireCooldownTime = 200;
@@ -15,6 +19,7 @@ class Unit implements GameObject {
   Team team;
   Vector2 position;
   Stage stage;
+  UnitAI ai;
 
   double fireCooldown;
 
@@ -30,12 +35,11 @@ class Unit implements GameObject {
   }
 
   void update(double timeScale) {
-    updateTarget();
     move(timeScale);
     updateFire(timeScale);
   }
 
-  void updateTarget() {
+  void move(double timeScale) {
     if (moveTarget != null) {
       Vector2 difference = moveTarget - position;
       targetVelocity = difference.normalized() * speed;
@@ -44,21 +48,25 @@ class Unit implements GameObject {
         targetVelocity = Vector2.zero();
       }
     }
-  }
-
-  void move(double timeScale) {
-    Vector2 diff = targetVelocity - velocity;
-    velocity += clampVector(diff, acceleration * timeScale);
-    velocity = clampVector(velocity, speed);
+    velocity = Helper.clampVector(
+        velocity +
+            Helper.clampVector(
+                targetVelocity - velocity, acceleration * timeScale),
+        speed);
+    velocity += resolveCollisions() * timeScale;
     position += velocity * timeScale;
-    position.x = position.x.clamp(0, stage.width);
-    position.y = position.y.clamp(0, stage.width);
   }
 
-  void collision() {}
+  Vector2 resolveCollisions() {
+    Vector2 normal = Vector2.zero();
+    stage.units.where((Unit u) => u != this).forEach((Unit unit) {
+      normal += Collision.unitToUnit(this, unit);
+    });
+    return normal;
+  }
 
   void updateFire(double timeScale) {
-    if (fireTarget != null && canFire()) {
+    if (fireTarget != null && fireCooldown <= 0) {
       fireCooldown = fireCooldownTime;
       Vector2 velocity = (fireTarget - position).normalized() * projectileSpeed;
       stage.addProjectile(position, velocity, team);
@@ -84,25 +92,13 @@ class Unit implements GameObject {
     return stage.game.input.unitSelect.selectedUnits.contains(this);
   }
 
-  bool canFire() {
-    return (fireCooldown <= 0);
-  }
-
-  Vector2 clampVector(Vector2 vector, double magnitude) {
-    if (vector.length2 > magnitude * magnitude) {
-      return vector.normalized() * magnitude;
-    } else {
-      return vector;
-    }
-  }
-
   List<Shape> renderShapes() {
     if (selected()) {
-      return [Shape(ShapeType.Circle, 10, "#64b5f6")];
+      return [Shape(ShapeType.Circle, radius, "#64b5f6")];
     } else if (team == Team.Friendly) {
-      return [Shape(ShapeType.Circle, 10, "#2196f3")];
+      return [Shape(ShapeType.Circle, radius, "#2196f3")];
     } else {
-      return [Shape(ShapeType.Circle, 10, "#c2185b")];
+      return [Shape(ShapeType.Circle, radius, "#c2185b")];
     }
   }
 }
