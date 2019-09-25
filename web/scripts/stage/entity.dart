@@ -2,10 +2,12 @@ import 'package:vector_math/vector_math.dart';
 
 import '../renderer/shape.dart';
 import 'game_object.dart';
+import 'stage.dart';
 
 class Entity implements GameObject {
-  Vector2 velocity;
   Vector2 position;
+  Vector2 velocity;
+  Stage stage;
 
   Entity(this.position, this.velocity);
 

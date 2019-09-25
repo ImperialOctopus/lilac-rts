@@ -1,9 +1,11 @@
 import 'package:vector_math/vector_math.dart';
+import '../engine/ai/instruction.dart';
 import '../engine/ai/unit_ai.dart';
 import '../engine/collision.dart';
 import '../engine/helper.dart';
 import '../renderer/shape.dart';
 import 'game_object.dart';
+import 'projectile.dart';
 import 'stage.dart';
 
 enum Team { Friendly, Enemy }
@@ -28,18 +30,22 @@ class Unit implements GameObject {
   Vector2 moveTarget;
   Vector2 fireTarget;
 
-  Unit(this.position, this.team, this.stage) {
+  Unit(this.position, this.team, {this.ai}) {
     velocity = Vector2.zero();
     targetVelocity = Vector2.zero();
     fireCooldown = 0;
+    if (ai != null) {
+      ai.unit = this;
+    }
   }
 
   void update(double timeScale) {
-    move(timeScale);
+    updateAI();
+    updateMove(timeScale);
     updateFire(timeScale);
   }
 
-  void move(double timeScale) {
+  void updateMove(double timeScale) {
     if (moveTarget != null) {
       Vector2 difference = moveTarget - position;
       targetVelocity = difference.normalized() * speed;
@@ -58,18 +64,18 @@ class Unit implements GameObject {
   }
 
   Vector2 resolveCollisions() {
-    Vector2 normal = Vector2.zero();
+    Vector2 reaction = Vector2.zero();
     stage.units.where((Unit u) => u != this).forEach((Unit unit) {
-      normal += Collision.unitToUnit(this, unit);
+      reaction += Collision.unitReaction(this, unit);
     });
-    return normal;
+    return reaction;
   }
 
   void updateFire(double timeScale) {
     if (fireTarget != null && fireCooldown <= 0) {
       fireCooldown = fireCooldownTime;
       Vector2 velocity = (fireTarget - position).normalized() * projectileSpeed;
-      stage.addProjectile(position, velocity, team);
+      stage.addProjectile(Projectile(position, velocity, team));
       fireTarget = null;
     }
     if (fireCooldown > 0) {
@@ -77,26 +83,31 @@ class Unit implements GameObject {
     }
   }
 
-  void setMoveTarget(Vector2 position) {
-    moveTarget = position;
-  }
-
-  void setFireTarget(Vector2 position) {
-    fireTarget = position;
-  }
-
-  bool selected() {
-    if (team != Team.Friendly) {
-      return false;
+  void updateAI() {
+    if (ai != null) {
+      Instruction result = ai.update();
+      if (result != null) {
+        if (result.updateMoveTarget) {
+          moveTarget = result.moveTarget;
+        }
+        if (result.updateFireTarget) {
+          fireTarget = result.fireTarget;
+        }
+      }
     }
-    return stage.game.input.unitSelect.selectedUnits.contains(this);
+  }
+
+  void destroy() {
+    stage.removeUnit(this);
   }
 
   List<Shape> renderShapes() {
-    if (selected()) {
-      return [Shape(ShapeType.Circle, radius, "#64b5f6")];
-    } else if (team == Team.Friendly) {
-      return [Shape(ShapeType.Circle, radius, "#2196f3")];
+    if (team == Team.Friendly) {
+      if (stage.game.input.unitSelect.selectedUnits.contains(this)) {
+        return [Shape(ShapeType.Circle, radius, "#64b5f6")];
+      } else {
+        return [Shape(ShapeType.Circle, radius, "#2196f3")];
+      }
     } else {
       return [Shape(ShapeType.Circle, radius, "#c2185b")];
     }

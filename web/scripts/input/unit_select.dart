@@ -67,13 +67,13 @@ class UnitSelect {
 
   void setMoveTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setMoveTarget(Vector2(e.offset.x, e.offset.y));
+      u.moveTarget = Vector2(e.offset.x, e.offset.y);
     }
   }
 
   void setFireTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.setFireTarget(Vector2(e.offset.x, e.offset.y));
+      u.fireTarget = Vector2(e.offset.x, e.offset.y);
     }
   }
 

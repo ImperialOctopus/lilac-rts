@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:vector_math/vector_math.dart';
 
+import 'engine/ai/ai_random_move.dart';
 import 'engine/engine.dart';
 import 'input/input.dart';
 import 'renderer/renderer.dart';
@@ -25,9 +26,10 @@ class LilacGame {
   void start() {
     //#6495ED
     currentStage = Stage(600, 600, "#EEEEEE", this);
-    currentStage.addUnit(Team.Friendly, Vector2(50, 50));
-    currentStage.addUnit(Team.Friendly, Vector2(100, 50));
-    currentStage.addUnit(Team.Enemy, Vector2(100, 100));
+    currentStage.addUnit(Unit(Vector2(50, 50), Team.Friendly));
+    currentStage.addUnit(Unit(Vector2(100, 50), Team.Friendly));
+    currentStage
+        .addUnit(Unit(Vector2(100, 100), Team.Enemy, ai: AIRandomMove()));
 
     engine.start();
     renderer.start();

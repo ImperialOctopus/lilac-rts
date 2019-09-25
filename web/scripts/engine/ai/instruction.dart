@@ -1,8 +1,15 @@
 import 'package:vector_math/vector_math.dart';
 
 class Instruction {
+  bool updateMoveTarget;
   Vector2 moveTarget;
+
+  bool updateFireTarget;
   Vector2 fireTarget;
-  bool fire;
-  Instruction({this.moveTarget, this.fireTarget, this.fire});
+
+  Instruction(
+      {this.updateMoveTarget,
+      this.moveTarget,
+      this.updateFireTarget,
+      this.fireTarget});
 }

@@ -14,34 +14,58 @@ class Stage {
   int width;
   String color;
 
-  List<Unit> units;
-  List<Projectile> projectiles;
-  List<Entity> entities;
-  List<Obstacle> obstacles;
+  Set<Unit> units;
+  Set<Projectile> projectiles;
+  Set<Entity> entities;
+  Set<Obstacle> obstacles;
 
   Vector2 cameraPosition = Vector2(0, 0);
   double cameraZoom = 1;
 
   Stage(this.height, this.width, this.color, this.game) {
-    units = List<Unit>();
-    projectiles = List<Projectile>();
-    entities = List<Entity>();
-    obstacles = List<Obstacle>();
+    units = Set<Unit>();
+    projectiles = Set<Projectile>();
+    entities = Set<Entity>();
+    obstacles = Set<Obstacle>();
   }
 
   List<GameObject> get gameObjects {
-    // Everything with a render
     return [...units, ...projectiles, ...entities, ...obstacles];
   }
 
-  void addUnit(Team team, Vector2 position) {
-    units.add(Unit(position, team, this));
+  void addUnit(Unit unit) {
+    unit.stage = this;
+    units.add(unit);
   }
 
-  void addProjectile(Vector2 position, Vector2 velocity, Team team) {
-    projectiles.add(Projectile(position, velocity, team));
+  void addProjectile(Projectile projectile) {
+    projectile.stage = this;
+    projectiles.add(projectile);
   }
 
-  void addEntity() {}
-  void addObstacle() {}
+  void addEntity(Entity entity) {
+    entity.stage = this;
+    entities.add(entity);
+  }
+
+  void addObstacle(Obstacle obstacle) {
+    obstacle.stage = this;
+    obstacles.add(obstacle);
+  }
+
+  void removeUnit(Unit unit) {
+    units.remove(unit);
+  }
+
+  void removeProjectile(Projectile projectile) {
+    projectiles.remove(projectile);
+  }
+
+  void removeEntity(Entity entity) {
+    entities.remove(entity);
+  }
+
+  void removeObstacle(Obstacle obstacle) {
+    obstacles.remove(obstacle);
+  }
 }
