@@ -1,4 +1,4 @@
-import '../../stage/unit.dart';
+import '../../stage/units/unit.dart';
 import 'instruction.dart';
 
 abstract class UnitAI {

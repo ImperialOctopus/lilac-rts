@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:vector_math/vector_math.dart';
 
 import '../lilac_game.dart';
-import '../stage/unit.dart';
+import '../stage/units/unit.dart';
 
 class UnitSelect {
   LilacGame game;
@@ -27,6 +27,7 @@ class UnitSelect {
     game.context.canvas.onMouseMove.listen((MouseEvent e) {
       mousePosition = Vector2(e.offset.x, e.offset.y);
     });
+    game.context.canvas.onMouseLeave.listen(stopDrag);
   }
 
   void mouseDown(MouseEvent e) {
@@ -67,19 +68,24 @@ class UnitSelect {
 
   void setMoveTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.moveTarget = Vector2(e.offset.x, e.offset.y);
+      u.moveTarget =
+          Vector2(e.offset.x, e.offset.y) + game.currentStage.cameraPosition;
     }
   }
 
   void setFireTarget(MouseEvent e) {
     for (Unit u in selectedUnits) {
-      u.fireTarget = Vector2(e.offset.x, e.offset.y);
+      u.fireTarget =
+          Vector2(e.offset.x, e.offset.y) + game.currentStage.cameraPosition;
     }
   }
 
   void select() {
     Rectangle selection = Rectangle.fromPoints(
-        Point(position1.x, position1.y), Point(position2.x, position2.y));
+        Point(position1.x + game.currentStage.cameraPosition.x,
+            position1.y + game.currentStage.cameraPosition.y),
+        Point(position2.x + game.currentStage.cameraPosition.x,
+            position2.y + game.currentStage.cameraPosition.y));
 
     selectedUnits.clear();
     for (var unit in game.currentStage.units) {

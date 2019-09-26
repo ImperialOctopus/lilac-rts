@@ -1,10 +1,11 @@
 import 'package:vector_math/vector_math.dart';
 
 import '../engine/collision.dart';
-import '../renderer/shape.dart';
+import '../renderer/shapes/shape.dart';
+import '../renderer/shapes/shape_circle.dart';
 import 'game_object.dart';
 import 'stage.dart';
-import 'unit.dart';
+import 'units/unit.dart';
 
 class Projectile implements GameObject {
   Vector2 position;
@@ -38,9 +39,9 @@ class Projectile implements GameObject {
 
   List<Shape> renderShapes() {
     if (team == Team.Friendly) {
-      return [Shape(ShapeType.Circle, radius, "#000000")];
+      return [ShapeCircle(radius, "#000000")];
     } else {
-      return [Shape(ShapeType.Circle, radius, "#880e4f")];
+      return [ShapeCircle(radius, "#880e4f")];
     }
   }
 

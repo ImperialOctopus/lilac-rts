@@ -7,7 +7,7 @@ import 'entity.dart';
 import 'game_object.dart';
 import 'obstacle.dart';
 import 'projectile.dart';
-import 'unit.dart';
+import 'units/unit.dart';
 
 class Stage {
   LilacGame game;
@@ -23,6 +23,10 @@ class Stage {
 
   Vector2 cameraPosition = Vector2(0, 0);
   double cameraZoom = 1;
+
+  Vector2 get cameraOffset {
+    return cameraPosition.scaled(-1);
+  }
 
   Stage(this.height, this.width, this.color, this.game) {
     units = Set<Unit>();

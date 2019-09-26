@@ -1,12 +1,14 @@
 import 'package:vector_math/vector_math.dart';
-import '../engine/ai/instruction.dart';
-import '../engine/ai/unit_ai.dart';
-import '../engine/collision.dart';
-import '../engine/helper.dart';
-import '../renderer/shape.dart';
-import 'game_object.dart';
-import 'projectile.dart';
-import 'stage.dart';
+
+import '../../engine/ai/instruction.dart';
+import '../../engine/ai/unit_ai.dart';
+import '../../engine/collision.dart';
+import '../../engine/helper.dart';
+import '../../renderer/shapes/shape.dart';
+import '../../renderer/shapes/shape_circle.dart';
+import '../game_object.dart';
+import '../projectile.dart';
+import '../stage.dart';
 
 enum Team { Friendly, Enemy }
 
@@ -104,12 +106,12 @@ class Unit implements GameObject {
   List<Shape> renderShapes() {
     if (team == Team.Friendly) {
       if (stage.game.input.unitSelect.selectedUnits.contains(this)) {
-        return [Shape(ShapeType.Circle, radius, "#64b5f6")];
+        return [ShapeCircle(radius, "#64b5f6")];
       } else {
-        return [Shape(ShapeType.Circle, radius, "#2196f3")];
+        return [ShapeCircle(radius, "#2196f3")];
       }
     } else {
-      return [Shape(ShapeType.Circle, radius, "#c2185b")];
+      return [ShapeCircle(radius, "#c2185b")];
     }
   }
 }

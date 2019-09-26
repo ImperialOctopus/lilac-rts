@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:vector_math/vector_math.dart';
 
 import '../stage/projectile.dart';
-import '../stage/unit.dart';
+import '../stage/units/unit.dart';
 
 class Collision {
   static Vector2 unitReaction(Unit us, Unit them) {

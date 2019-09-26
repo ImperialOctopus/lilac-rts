@@ -8,7 +8,7 @@ import 'engine/engine.dart';
 import 'input/input.dart';
 import 'renderer/renderer.dart';
 import 'stage/stage.dart';
-import 'stage/unit.dart';
+import 'stage/units/unit.dart';
 
 class LilacGame {
   LilacGame(this.context) {

@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:vector_math/vector_math.dart';
 
 import '../lilac_game.dart';
 import '../stage/game_object.dart';
 import '../stage/stage.dart';
-import 'shape.dart';
+import 'shapes/shape.dart';
 
 class Renderer {
   LilacGame game;
@@ -21,9 +19,17 @@ class Renderer {
   }
 
   void renderBase(Stage stage) {
+    print(game.context.canvas.height);
+    print(game.context.canvas.width);
     game.context
       ..beginPath()
-      ..rect(0, 0, stage.width, stage.height)
+      ..rect(0, 0, game.context.canvas.width, game.context.canvas.height)
+      ..fillStyle = "#222222"
+      ..fill();
+    game.context
+      ..beginPath()
+      ..rect(-stage.cameraPosition.x, -stage.cameraPosition.y, stage.width,
+          stage.height)
       ..fillStyle = stage.color
       ..fill();
   }
@@ -31,20 +37,10 @@ class Renderer {
   void renderStage(Stage stage) {
     Vector2 offset = stage.cameraPosition;
     stage.gameObjects.forEach((GameObject gameObject) {
-      gameObject
-          .renderShapes()
-          .forEach((Shape s) => renderShape(gameObject.position + offset, s));
+      gameObject.renderShapes().forEach((Shape shape) {
+        shape.render(game.context, gameObject.position - offset);
+      });
     });
-  }
-
-  void renderShape(Vector2 position, Shape shape) {
-    if (shape.type == ShapeType.Circle) {
-      game.context
-        ..beginPath()
-        ..arc(position.x, position.y, shape.radius, 0, 2 * pi)
-        ..fillStyle = shape.color
-        ..fill();
-    }
   }
 
   void renderUI(Stage stage) {
