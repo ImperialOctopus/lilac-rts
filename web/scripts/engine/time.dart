@@ -1,6 +1,11 @@
 class Time {
-  bool paused = false;
-  int speed = 5;
+  bool paused;
+  int speed;
+
+  Time() {
+    paused = false;
+    speed = 5;
+  }
 
   double get multiplier {
     if (paused) {

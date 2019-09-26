@@ -1,6 +1,6 @@
 import '../lilac_game.dart';
 import '../stage/game_object.dart';
-import '../stage/stage.dart';
+import '../stage/stages/stage.dart';
 import 'time.dart';
 
 class Engine {
@@ -14,9 +14,8 @@ class Engine {
   void start() {}
 
   void update(Stage stage) {
-    double timeScale = time.multiplier;
-    stage.gameObjects.forEach((GameObject e) {
-      e.update(timeScale);
-    });
+    for (GameObject e in stage.gameObjects) {
+      e.update(time.multiplier);
+    }
   }
 }

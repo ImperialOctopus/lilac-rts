@@ -4,7 +4,6 @@ class Keyboard {
   Map<int, Function> pressBindings;
   Map<int, Function> holdBindings;
   Set<int> keysHeld;
-  KeyCode keyCode;
 
   Keyboard() {
     pressBindings = Map<int, Function>();

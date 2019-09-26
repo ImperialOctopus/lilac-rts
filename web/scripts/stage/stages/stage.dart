@@ -2,19 +2,19 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../lilac_game.dart';
-import 'entity.dart';
-import 'game_object.dart';
-import 'obstacle.dart';
-import 'projectile.dart';
-import 'units/unit.dart';
+import '../../lilac_game.dart';
+import '../entity.dart';
+import '../game_object.dart';
+import '../obstacles/obstacle.dart';
+import '../projectile.dart';
+import '../units/unit.dart';
 
 class Stage {
   LilacGame game;
 
   int height;
   int width;
-  String color;
+  String colour;
 
   Set<Unit> units;
   Set<Projectile> projectiles;
@@ -28,7 +28,7 @@ class Stage {
     return cameraPosition.scaled(-1);
   }
 
-  Stage(this.height, this.width, this.color, this.game) {
+  Stage(this.game) {
     units = Set<Unit>();
     projectiles = Set<Projectile>();
     entities = Set<Entity>();
@@ -44,6 +44,8 @@ class Stage {
     return Vector2(
         random.nextInt(width).toDouble(), random.nextInt(height).toDouble());
   }
+
+  void start() {}
 
   void addUnit(Unit unit) {
     unit.stage = this;

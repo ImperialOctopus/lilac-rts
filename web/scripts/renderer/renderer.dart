@@ -1,11 +1,14 @@
 import 'package:vector_math/vector_math.dart';
 
+import '../input/mouse.dart';
 import '../lilac_game.dart';
 import '../stage/game_object.dart';
-import '../stage/stage.dart';
+import '../stage/stages/stage.dart';
 import 'shapes/shape.dart';
 
 class Renderer {
+  static const String backgroundColour = "#666666";
+
   LilacGame game;
 
   Renderer(this.game);
@@ -19,28 +22,25 @@ class Renderer {
   }
 
   void renderBase(Stage stage) {
-    print(game.context.canvas.height);
-    print(game.context.canvas.width);
     game.context
       ..beginPath()
       ..rect(0, 0, game.context.canvas.width, game.context.canvas.height)
-      ..fillStyle = "#222222"
+      ..fillStyle = backgroundColour
       ..fill();
     game.context
       ..beginPath()
       ..rect(-stage.cameraPosition.x, -stage.cameraPosition.y, stage.width,
           stage.height)
-      ..fillStyle = stage.color
+      ..fillStyle = stage.colour
       ..fill();
   }
 
   void renderStage(Stage stage) {
-    Vector2 offset = stage.cameraPosition;
-    stage.gameObjects.forEach((GameObject gameObject) {
-      gameObject.renderShapes().forEach((Shape shape) {
-        shape.render(game.context, gameObject.position - offset);
-      });
-    });
+    for (GameObject gameObject in stage.gameObjects) {
+      for (Shape shape in gameObject.renderShapes()) {
+        shape.render(game.context);
+      }
+    }
   }
 
   void renderUI(Stage stage) {
@@ -48,15 +48,15 @@ class Renderer {
   }
 
   void renderSelection() {
-    if (game.input.unitSelect.selecting) {
-      Vector2 p1 = game.input.unitSelect.position1;
-      Vector2 p2 = game.input.unitSelect.mousePosition;
+    if (game.input.mouse.selecting) {
+      Vector2 p1 = game.input.mouse.position1;
+      Vector2 p2 = game.input.mouse.mousePosition;
 
       game.context
         ..beginPath()
         ..rect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
-        ..strokeStyle = "#000000"
-        ..lineWidth = 2
+        ..strokeStyle = Mouse.lineColour
+        ..lineWidth = Mouse.lineThickness
         ..stroke();
     }
   }

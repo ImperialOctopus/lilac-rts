@@ -6,15 +6,19 @@ import 'package:vector_math/vector_math.dart';
 import '../lilac_game.dart';
 import '../stage/units/unit.dart';
 
-class UnitSelect {
+class Mouse {
+  static const String lineColour = "#000000";
+  static const int lineThickness = 2;
+
   LilacGame game;
   List<Unit> selectedUnits;
+
   Vector2 position1;
   Vector2 position2;
   Vector2 mousePosition;
   bool selecting;
 
-  UnitSelect(this.game) {
+  Mouse(this.game) {
     selectedUnits = List<Unit>();
     selecting = false;
   }

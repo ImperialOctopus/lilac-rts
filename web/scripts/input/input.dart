@@ -4,16 +4,16 @@ import '../engine/ai/ai_random_move.dart';
 import '../lilac_game.dart';
 import '../stage/units/unit.dart';
 import 'keyboard.dart';
-import 'unit_select.dart';
+import 'mouse.dart';
 
 class Input {
   LilacGame game;
   Keyboard keyboard;
-  UnitSelect unitSelect;
+  Mouse mouse;
 
   Input(this.game) {
     keyboard = Keyboard();
-    unitSelect = UnitSelect(game);
+    mouse = Mouse(game);
   }
 
   void start() {
@@ -37,7 +37,7 @@ class Input {
     keyboard.addHold(KeyCode.D, () => game.currentStage.cameraPosition.x += 2);
 
     keyboard.start();
-    unitSelect.start();
+    mouse.start();
   }
 
   void update() {
