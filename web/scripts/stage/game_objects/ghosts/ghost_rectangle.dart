@@ -4,11 +4,11 @@ import '../../../renderer/shapes/shape.dart';
 import '../../../renderer/shapes/shape_rectangle.dart';
 import 'ghost.dart';
 
-class GhostBuilding extends Ghost {
+class GhostRectangle extends Ghost {
   Vector2 size;
   String colour;
 
-  GhostBuilding(Vector2 position, this.size, this.colour) : super(position);
+  GhostRectangle(Vector2 position, this.size, this.colour) : super(position);
 
   @override
   List<Shape> get renderShapes {

@@ -4,30 +4,19 @@ import '../../../engine/collision/collider.dart';
 import '../../../engine/collision/collider_circle.dart';
 import '../../../renderer/shapes/shape.dart';
 import '../../../renderer/shapes/shape_circle.dart';
-import '../../stages/stage.dart';
 import '../entities/entity.dart';
-import '../game_object.dart';
 import '../obstacles/obstacle.dart';
 import '../units/unit.dart';
+import 'projectile.dart';
 
-class Projectile extends GameObject {
-  int radius = 5;
-  int damage = 1;
+class ProjectileBig extends Projectile {
+  int radius = 10;
+  int damage = 3;
 
-  Vector2 position;
-  Vector2 velocity;
-  Team team;
-  Stage stage;
-
-  Projectile(this.position, this.velocity, this.team);
+  ProjectileBig(Vector2 position, Vector2 velocity, Team team)
+      : super(position, velocity, team);
 
   @override
-  void update() {
-    resolveCollisions();
-
-    position += velocity * stage.time.multiplier;
-  }
-
   void resolveCollisions() {
     for (Unit unit in stage.units) {
       if (unit.team != team && unit.collider.intersectsCircle(collider)) {

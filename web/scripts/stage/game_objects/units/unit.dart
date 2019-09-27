@@ -18,9 +18,10 @@ class Unit extends GameObject {
   Stage stage;
 
   int radius = 20;
-  double speed = 1;
-  double acceleration = 0.2;
-  double fireCooldownTime = 200;
+  int health = 2;
+  double speed = 2;
+  double acceleration = 0.4;
+  double fireCooldownTime = 100;
   double projectileSpeed = 3;
 
   Team team;
@@ -97,12 +98,16 @@ class Unit extends GameObject {
     if (fireTarget != null && fireCooldown <= 0) {
       fireCooldown = fireCooldownTime;
       Vector2 velocity = (fireTarget - position).normalized() * projectileSpeed;
-      stage.addProjectile(Projectile(position, velocity, team));
+      stage.addProjectile(createProjectile(position, velocity, team));
       fireTarget = null;
     }
     if (fireCooldown > 0) {
       fireCooldown -= 1 * timeScale;
     }
+  }
+
+  Projectile createProjectile(Vector2 position, Vector2 velocity, Team team) {
+    return Projectile(position, velocity, team);
   }
 
   void updateAI() {
@@ -116,6 +121,13 @@ class Unit extends GameObject {
           fireTarget = result.fireTarget;
         }
       }
+    }
+  }
+
+  void damage(int i) {
+    health -= i;
+    if (health <= 0) {
+      destroy();
     }
   }
 
