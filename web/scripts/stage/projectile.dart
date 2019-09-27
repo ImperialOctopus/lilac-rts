@@ -11,25 +11,25 @@ import 'stages/stage.dart';
 import 'units/unit.dart';
 
 class Projectile implements GameObject {
+  int radius;
+
   Vector2 position;
   Vector2 velocity;
   Team team;
   Stage stage;
 
-  int radius = 5;
-
-  Projectile(this.position, this.velocity, this.team);
+  Projectile(this.position, this.velocity, this.team, {this.radius = 5});
 
   @override
-  void update(double timeScale) {
+  void update() {
     resolveCollisions();
 
-    position += velocity * timeScale;
+    position += velocity * stage.time.multiplier;
   }
 
   void resolveCollisions() {
     for (Unit unit in stage.units) {
-      if (unit.team != team && collider().intersects(unit.collider())) {
+      if (unit.team != team && collider().intersectsCircle(unit.collider())) {
         unit.destroy();
         this.destroy();
       }
@@ -37,7 +37,7 @@ class Projectile implements GameObject {
 
     for (Entity entity in stage.entities) {
       if (entity.collider() != null) {
-        if (entity.collider().intersects(collider())) {
+        if (entity.collider().intersectsCircle(collider())) {
           this.destroy();
         }
       }
@@ -45,7 +45,7 @@ class Projectile implements GameObject {
 
     for (Obstacle obstacle in stage.obstacles) {
       if (obstacle.collider() != null) {
-        if (obstacle.collider().intersects(collider())) {
+        if (obstacle.collider().intersectsCircle(collider())) {
           this.destroy();
         }
       }
@@ -55,7 +55,7 @@ class Projectile implements GameObject {
       if (projectile == this) {
         continue;
       }
-      if (collider().intersects(projectile.collider())) {
+      if (collider().intersectsCircle(projectile.collider())) {
         projectile.destroy();
         this.destroy();
       }

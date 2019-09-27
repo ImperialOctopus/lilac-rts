@@ -18,5 +18,7 @@ class StageZero extends Stage {
     addUnit(Unit(Vector2(100, 50), Team.Friendly));
     addUnit(Unit(Vector2(100, 100), Team.Enemy, ai: AIRandomMove()));
     addObstacle(ObstacleWall(Vector2(300, 300), Vector2(400, 400)));
+    
+    super.start();
   }
 }

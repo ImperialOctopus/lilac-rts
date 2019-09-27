@@ -11,7 +11,7 @@ abstract class Collider {
 
   Vector2 get center;
 
-  bool intersects(ColliderCircle collider);
+  bool intersectsCircle(ColliderCircle collider);
 
   Vector2 reaction(ColliderCircle collider);
 }

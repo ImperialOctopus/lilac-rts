@@ -8,7 +8,7 @@ abstract class GameObject {
   Vector2 position;
   Stage stage;
 
-  void update(double timeScale);
+  void update();
   void destroy();
 
   List<Shape> renderShapes();

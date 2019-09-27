@@ -1,10 +1,13 @@
 import 'dart:html';
 import 'dart:async';
 
+import 'package:pedantic/pedantic.dart';
 import 'package:vector_math/vector_math.dart';
 
 import 'engine/engine.dart';
 import 'input/input.dart';
+import 'menu/menu.dart';
+import 'menu/menus/menu_main.dart';
 import 'renderer/renderer.dart';
 import 'stage/stages/stage.dart';
 import 'stage/stages/stage_zero.dart';
@@ -22,39 +25,44 @@ class LilacGame {
   Input input;
   Renderer renderer;
   Engine engine;
-  Stage currentStage;
+  Stage stage;
+  Menu menu;
 
-  void start() {
-    //#6495ED
-    currentStage = StageZero(this);
-
+  void start() async {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    currentStage.cameraPosition = Vector2(
-        -(canvas.width - currentStage.width) / 2,
-        -(canvas.height - currentStage.height) / 2);
 
-    currentStage.start();
-    engine.start();
-    renderer.start();
-    input.start();
+    await engine.start();
+    await renderer.start();
+    await input.start();
 
-    renderLoop();
+    await loadMenu(MenuMain(this));
+
+    unawaited(renderLoop());
     Timer.periodic(Duration(milliseconds: 20), engineLoop);
-
     window.onResize.listen((Event e) => resizeCanvas());
+  }
+
+  Future<void> loadStage(Stage newStage) async {
+    stage = newStage;
+    await stage?.start();
+  }
+
+  Future<void> loadMenu(Menu newMenu) async {
+    menu = newMenu;
+    await menu?.start();
   }
 
   Future<void> renderLoop() async {
     while (true) {
       await window.animationFrame;
       await input.update();
-      await renderer.render(currentStage);
+      await renderer.render(stage, menu);
     }
   }
 
   void engineLoop(Timer t) {
-    engine.update(currentStage);
+    engine.update(stage);
   }
 
   void resizeCanvas() {
@@ -63,6 +71,6 @@ class LilacGame {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    currentStage.cameraPosition -= Vector2(widthChange / 2, heightChange / 2);
+    stage?.cameraPosition -= Vector2(widthChange / 2, heightChange / 2);
   }
 }

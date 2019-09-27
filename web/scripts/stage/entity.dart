@@ -13,7 +13,7 @@ class Entity implements GameObject {
   Entity(this.position, this.velocity);
 
   @override
-  void update(double timeScale) {}
+  void update() {}
 
   @override
   void destroy() {}

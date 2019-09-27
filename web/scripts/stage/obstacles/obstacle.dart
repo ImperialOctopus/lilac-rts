@@ -11,7 +11,7 @@ class Obstacle implements GameObject {
 
   Obstacle(this.position);
 
-  void update(double timeScale) {}
+  void update() {}
 
   @override
   List<Shape> renderShapes() {

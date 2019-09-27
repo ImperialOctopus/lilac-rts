@@ -2,6 +2,8 @@ import 'package:vector_math/vector_math.dart';
 
 import '../input/mouse.dart';
 import '../lilac_game.dart';
+import '../menu/menu.dart';
+import '../menu/menu_item.dart';
 import '../stage/game_object.dart';
 import '../stage/stages/stage.dart';
 import 'shapes/shape.dart';
@@ -15,18 +17,27 @@ class Renderer {
 
   void start() {}
 
-  void render(Stage stage) {
-    renderBase(stage);
-    renderStage(stage);
-    renderUI(stage);
+  void render(Stage stage, Menu menu) {
+    renderBackground();
+    if (stage != null) {
+      renderStageBackground(stage);
+      renderStageObjects(stage);
+      renderSelection();
+    }
+    if (menu != null) {
+      renderMenuObjects(menu);
+    }
   }
 
-  void renderBase(Stage stage) {
+  renderBackground() {
     game.context
       ..beginPath()
       ..rect(0, 0, game.context.canvas.width, game.context.canvas.height)
       ..fillStyle = backgroundColour
       ..fill();
+  }
+
+  void renderStageBackground(Stage stage) {
     game.context
       ..beginPath()
       ..rect(-stage.cameraPosition.x, -stage.cameraPosition.y, stage.width,
@@ -35,7 +46,7 @@ class Renderer {
       ..fill();
   }
 
-  void renderStage(Stage stage) {
+  void renderStageObjects(Stage stage) {
     for (GameObject gameObject in stage.gameObjects) {
       for (Shape shape in gameObject.renderShapes()) {
         shape.render(game.context);
@@ -43,13 +54,9 @@ class Renderer {
     }
   }
 
-  void renderUI(Stage stage) {
-    renderSelection();
-  }
-
   void renderSelection() {
-    if (game.input.mouse.selecting) {
-      Vector2 p1 = game.input.mouse.position1;
+    if (game.stage.selectionStart != null) {
+      Vector2 p1 = game.stage.selectionStart;
       Vector2 p2 = game.input.mouse.mousePosition;
 
       game.context
@@ -58,6 +65,12 @@ class Renderer {
         ..strokeStyle = Mouse.lineColour
         ..lineWidth = Mouse.lineThickness
         ..stroke();
+    }
+  }
+
+  void renderMenuObjects(Menu menu) {
+    for (MenuItem menuItem in menu.menuItems) {
+      menuItem.render(game.context);
     }
   }
 }

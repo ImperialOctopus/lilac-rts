@@ -21,7 +21,7 @@ class ColliderCircle implements Collider {
   }
 
   @override
-  bool intersects(ColliderCircle collider) {
+  bool intersectsCircle(ColliderCircle collider) {
     if (collider == null) {
       return false;
     }
@@ -34,7 +34,7 @@ class ColliderCircle implements Collider {
     if (collider == null) {
       return Vector2.zero();
     }
-    if (intersects(collider)) {
+    if (intersectsCircle(collider)) {
       return (collider.parent.position - center) *
           (1 /
               (center.distanceToSquared(collider.parent.position) /

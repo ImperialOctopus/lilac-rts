@@ -28,7 +28,7 @@ class ColliderLine implements Collider {
   }
 
   @override
-  bool intersects(ColliderCircle collider) {
+  bool intersectsCircle(ColliderCircle collider) {
     if (collider == null) {
       return false;
     }

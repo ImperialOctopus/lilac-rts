@@ -42,13 +42,15 @@ class Unit implements GameObject {
   }
 
   @override
-  void update(double timeScale) {
+  void update() {
     updateAI();
-    updateMove(timeScale);
-    updateFire(timeScale);
+    updateMove();
+    updateFire();
   }
 
-  void updateMove(double timeScale) {
+  void updateMove() {
+    double timeScale = stage.time.multiplier;
+
     if (moveTarget != null) {
       Vector2 difference = moveTarget - position;
       targetVelocity = difference.normalized() * speed;
@@ -86,7 +88,9 @@ class Unit implements GameObject {
     return reaction;
   }
 
-  void updateFire(double timeScale) {
+  void updateFire() {
+    double timeScale = stage.time.multiplier;
+
     if (fireTarget != null && fireCooldown <= 0) {
       fireCooldown = fireCooldownTime;
       Vector2 velocity = (fireTarget - position).normalized() * projectileSpeed;
@@ -120,7 +124,7 @@ class Unit implements GameObject {
   @override
   List<Shape> renderShapes() {
     if (team == Team.Friendly) {
-      if (stage.game.input.mouse.selectedUnits.contains(this)) {
+      if (stage.selectedUnits.contains(this)) {
         return [ShapeCircle(this, radius, "#64b5f6")];
       } else {
         return [ShapeCircle(this, radius, "#2196f3")];
