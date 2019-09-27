@@ -2,7 +2,6 @@ import 'dart:html';
 
 import '../engine/ai/ai_random_move.dart';
 import '../lilac_game.dart';
-import '../menu/menus/menu_main.dart';
 import '../stage/units/unit.dart';
 
 class Keyboard {
@@ -55,10 +54,7 @@ class Keyboard {
     addHold(KeyCode.RIGHT, () => game.stage.cameraPosition.x += 2);
 
     // Main menu
-    addBinding(KeyCode.ESC, () {
-      game.unloadStage();
-      game.loadMenu(MenuMain(game));
-    });
+    addBinding(KeyCode.ESC, () => game.stage.quit());
 
     window.onKeyDown.listen(keyDown);
     window.onKeyUp.listen(keyUp);

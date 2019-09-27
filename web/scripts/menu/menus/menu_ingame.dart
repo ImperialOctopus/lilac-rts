@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
+import '../../engine/ai/ai_random_move.dart';
 import '../../lilac_game.dart';
 import '../../stage/units/unit.dart';
 import '../menu_items/menu_item.dart';
@@ -14,6 +15,12 @@ class MenuIngame extends Menu {
 
   @override
   Future<void> start() async {
+    menuItems.add(MenuItemImage(
+        this, Vector2(0, 0), Vector2(50, 50), "assets/menu/ingame/quit.png",
+        alignment: Alignment.TopLeft,
+        clickArea: Rectangle(0, 0, 50, 50),
+        clickFunction: () => game.stage.quit()));
+
     menuItems.add(MenuItemButton(this, Vector2(0, -50), Vector2(50, 50),
         "assets/menu/ingame/pause-off.png", "assets/menu/ingame/pause-on.png",
         alignment: Alignment.BottomLeft,
@@ -61,8 +68,9 @@ class MenuIngame extends Menu {
         "assets/menu/ingame/create-enemy.png",
         alignment: Alignment.BottomRight,
         clickArea: Rectangle(0, 0, 50, 50),
-        clickFunction: () =>
-            game.stage.addUnit(Unit(game.stage.randomPosition(), Team.Enemy))));
+        clickFunction: () => game.stage.addUnit(Unit(
+            game.stage.randomPosition(), Team.Enemy,
+            ai: AIRandomMove()))));
     menuItems.add(MenuItemImage(this, Vector2(-100, -50), Vector2(50, 50),
         "assets/menu/ingame/create-friendly.png",
         alignment: Alignment.BottomRight,

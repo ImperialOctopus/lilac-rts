@@ -5,6 +5,7 @@ import 'package:vector_math/vector_math.dart';
 
 import '../../engine/time.dart';
 import '../../lilac_game.dart';
+import '../../menu/menus/menu_main.dart';
 import '../entity.dart';
 import '../game_object.dart';
 import '../obstacles/obstacle.dart';
@@ -64,10 +65,18 @@ class Stage {
         Vector2(height.toDouble(), 0)));
   }
 
+  void quit() {
+    game.unloadStage();
+    game.loadMenu(MenuMain(game));
+  }
+
   void mouseDown(MouseEvent e) {
     // Left click
     if (e.button == 0) {
       startDrag(Vector2(e.offset.x, e.offset.y));
+      if (e.ctrlKey) {
+        print(Vector2(e.offset.x, e.offset.y) + cameraPosition);
+      }
     }
     // Right click
     else if (e.button == 2) {
