@@ -6,27 +6,29 @@ import 'package:vector_math/vector_math.dart';
 import '../../engine/time.dart';
 import '../../lilac_game.dart';
 import '../../menu/menus/menu_main.dart';
-import '../entity.dart';
-import '../game_object.dart';
-import '../obstacles/obstacle.dart';
-import '../obstacles/obstacle_wall.dart';
-import '../projectile.dart';
-import '../units/unit.dart';
+import '../game_objects/entities/entity.dart';
+import '../game_objects/game_object.dart';
+import '../game_objects/ghosts/ghost.dart';
+import '../game_objects/obstacles/obstacle.dart';
+import '../game_objects/obstacles/obstacle_wall.dart';
+import '../game_objects/projectiles/projectile.dart';
+import '../game_objects/units/unit.dart';
 
 class Stage {
   LilacGame game;
   Time time;
 
-  int height;
-  int width;
-  String colour;
+  int height = 0;
+  int width = 0;
+  String backgroundColour = "#FFFFFF";
 
   Set<Unit> units;
   Set<Projectile> projectiles;
   Set<Entity> entities;
   Set<Obstacle> obstacles;
+  Set<Ghost> ghosts;
 
-  List<Unit> selectedUnits;
+  Set<Unit> selectedUnits;
   Vector2 selectionStart;
   Vector2 selectionEnd;
   bool selecting;
@@ -43,13 +45,15 @@ class Stage {
     projectiles = Set<Projectile>();
     entities = Set<Entity>();
     obstacles = Set<Obstacle>();
+    ghosts = Set<Ghost>();
+
     time = Time();
-    selectedUnits = List<Unit>();
+    selectedUnits = Set<Unit>();
     selecting = false;
   }
 
   List<GameObject> get gameObjects {
-    return [...units, ...projectiles, ...entities, ...obstacles];
+    return [...units, ...entities, ...projectiles, ...ghosts, ...obstacles];
   }
 
   void start() {
@@ -165,6 +169,11 @@ class Stage {
     obstacles.add(obstacle);
   }
 
+  void addGhost(Ghost ghost) {
+    ghost.stage = this;
+    ghosts.add(ghost);
+  }
+
   void removeUnit(Unit unit) {
     units.remove(unit);
   }
@@ -179,6 +188,10 @@ class Stage {
 
   void removeObstacle(Obstacle obstacle) {
     obstacles.remove(obstacle);
+  }
+
+  void removeGhost(Ghost ghost) {
+    ghosts.remove(ghost);
   }
 
   Vector2 randomPosition() {

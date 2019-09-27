@@ -4,7 +4,7 @@ import 'package:vector_math/vector_math.dart';
 
 import '../../engine/ai/ai_random_move.dart';
 import '../../lilac_game.dart';
-import '../../stage/units/unit.dart';
+import '../../stage/game_objects/units/unit.dart';
 import '../menu_items/menu_item.dart';
 import '../menu_items/menu_item_button.dart';
 import '../menu_items/menu_item_image.dart';

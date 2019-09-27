@@ -1,6 +1,6 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../../stage/units/unit.dart';
+import '../../stage/game_objects/units/unit.dart';
 import 'instruction.dart';
 import 'unit_ai.dart';
 

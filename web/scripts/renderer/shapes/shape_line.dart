@@ -1,8 +1,6 @@
-import 'dart:html';
-
 import 'package:vector_math/vector_math.dart';
 
-import '../../stage/game_object.dart';
+import '../../stage/game_objects/game_object.dart';
 import 'shape.dart';
 
 class ShapeLine implements Shape {
@@ -20,11 +18,11 @@ class ShapeLine implements Shape {
   }
 
   @override
-  void render(CanvasRenderingContext2D context) {
+  void render() {
     Vector2 start = parent.position + offset + parent.stage.cameraOffset;
     Vector2 end = start + direction.normalized().scaled(length);
 
-    context
+    parent.stage.game.context
       ..beginPath()
       ..lineWidth = thickness
       ..strokeStyle = colour

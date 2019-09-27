@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
-import '../../stage/game_object.dart';
+import '../../stage/game_objects/game_object.dart';
 import 'collider.dart';
 
 class ColliderCircle implements Collider {

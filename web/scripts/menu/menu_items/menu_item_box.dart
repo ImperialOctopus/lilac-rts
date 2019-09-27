@@ -26,7 +26,7 @@ class MenuItemBox extends MenuItem {
   Future<void> start() async {}
 
   @override
-  void render(CanvasRenderingContext2D context) {
+  void render() {
     menu.game.context
       ..beginPath()
       ..rect(alignedPosition.x, alignedPosition.y, size.x, size.y);

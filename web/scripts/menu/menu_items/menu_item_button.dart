@@ -42,10 +42,10 @@ class MenuItemButton extends MenuItem {
   }
 
   @override
-  void render(CanvasRenderingContext2D context) {
+  void render() {
     CanvasImageSource source;
     source = enabled ? imageOn : imageOff;
-    context.drawImageToRect(source,
+    menu.game.context.drawImageToRect(source,
         Rectangle(alignedPosition.x, alignedPosition.y, size.x, size.y));
   }
 }

@@ -48,7 +48,7 @@ class MenuItem {
 
   void update() {}
 
-  void render(CanvasRenderingContext2D context) {}
+  void render() {}
 
   void checkClick(Point point) {
     Point localPoint =

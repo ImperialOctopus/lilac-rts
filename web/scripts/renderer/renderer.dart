@@ -4,7 +4,7 @@ import '../input/mouse.dart';
 import '../lilac_game.dart';
 import '../menu/menu_items/menu_item.dart';
 import '../menu/menus/menu.dart';
-import '../stage/game_object.dart';
+import '../stage/game_objects/game_object.dart';
 import '../stage/stages/stage.dart';
 import 'shapes/shape.dart';
 
@@ -29,7 +29,7 @@ class Renderer {
     }
   }
 
-  renderBackground() {
+  void renderBackground() {
     game.context
       ..beginPath()
       ..rect(0, 0, game.context.canvas.width, game.context.canvas.height)
@@ -42,14 +42,14 @@ class Renderer {
       ..beginPath()
       ..rect(-stage.cameraPosition.x, -stage.cameraPosition.y, stage.width,
           stage.height)
-      ..fillStyle = stage.colour
+      ..fillStyle = stage.backgroundColour
       ..fill();
   }
 
   void renderStageObjects(Stage stage) {
     for (GameObject gameObject in stage.gameObjects) {
-      for (Shape shape in gameObject.renderShapes()) {
-        shape.render(game.context);
+      for (Shape shape in gameObject.renderShapes) {
+        shape.render();
       }
     }
   }
@@ -70,7 +70,7 @@ class Renderer {
 
   void renderMenuObjects(Menu menu) {
     for (MenuItem menuItem in menu.menuItems) {
-      menuItem.render(game.context);
+      menuItem.render();
     }
   }
 }

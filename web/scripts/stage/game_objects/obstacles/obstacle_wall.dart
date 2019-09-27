@@ -1,9 +1,9 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../../engine/collision/collider.dart';
-import '../../engine/collision/collider_line.dart';
-import '../../renderer/shapes/shape.dart';
-import '../../renderer/shapes/shape_line.dart';
+import '../../../engine/collision/collider.dart';
+import '../../../engine/collision/collider_line.dart';
+import '../../../renderer/shapes/shape.dart';
+import '../../../renderer/shapes/shape_line.dart';
 import 'obstacle.dart';
 
 class ObstacleWall extends Obstacle {
@@ -24,12 +24,14 @@ class ObstacleWall extends Obstacle {
   }
 
   @override
-  List<Shape> renderShapes() {
-    return [ShapeLine(this, direction, length, thickness: thickness, colour: colour)];
+  List<Shape> get renderShapes {
+    return [
+      ShapeLine(this, direction, length, thickness: thickness, colour: colour)
+    ];
   }
 
   @override
-  Collider collider() {
+  Collider get collider {
     return ColliderLine(this, direction, length);
   }
 }

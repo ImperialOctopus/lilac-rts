@@ -1,16 +1,16 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../engine/collision/collider.dart';
-import '../engine/collision/collider_circle.dart';
-import '../renderer/shapes/shape.dart';
-import '../renderer/shapes/shape_circle.dart';
-import 'entity.dart';
-import 'game_object.dart';
-import 'obstacles/obstacle.dart';
-import 'stages/stage.dart';
-import 'units/unit.dart';
+import '../../../engine/collision/collider.dart';
+import '../../../engine/collision/collider_circle.dart';
+import '../../../renderer/shapes/shape.dart';
+import '../../../renderer/shapes/shape_circle.dart';
+import '../../stages/stage.dart';
+import '../entities/entity.dart';
+import '../game_object.dart';
+import '../obstacles/obstacle.dart';
+import '../units/unit.dart';
 
-class Projectile implements GameObject {
+class Projectile extends GameObject {
   int radius;
 
   Vector2 position;
@@ -29,23 +29,23 @@ class Projectile implements GameObject {
 
   void resolveCollisions() {
     for (Unit unit in stage.units) {
-      if (unit.team != team && collider().intersectsCircle(unit.collider())) {
+      if (unit.team != team && unit.collider.intersectsCircle(collider)) {
         unit.destroy();
         this.destroy();
       }
     }
 
     for (Entity entity in stage.entities) {
-      if (entity.collider() != null) {
-        if (entity.collider().intersectsCircle(collider())) {
+      if (entity.collider != null) {
+        if (entity.collider.intersectsCircle(collider)) {
           this.destroy();
         }
       }
     }
 
     for (Obstacle obstacle in stage.obstacles) {
-      if (obstacle.collider() != null) {
-        if (obstacle.collider().intersectsCircle(collider())) {
+      if (obstacle.collider != null) {
+        if (obstacle.collider.intersectsCircle(collider)) {
           this.destroy();
         }
       }
@@ -55,7 +55,7 @@ class Projectile implements GameObject {
       if (projectile == this) {
         continue;
       }
-      if (collider().intersectsCircle(projectile.collider())) {
+      if (projectile.collider.intersectsCircle(collider)) {
         projectile.destroy();
         this.destroy();
       }
@@ -68,7 +68,7 @@ class Projectile implements GameObject {
   }
 
   @override
-  List<Shape> renderShapes() {
+  List<Shape> get renderShapes {
     if (team == Team.Friendly) {
       return [ShapeCircle(this, radius, "#000000")];
     } else {
@@ -77,7 +77,7 @@ class Projectile implements GameObject {
   }
 
   @override
-  Collider collider() {
+  Collider get collider {
     return ColliderCircle(this, radius);
   }
 }

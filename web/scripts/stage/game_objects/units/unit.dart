@@ -1,19 +1,19 @@
 import 'package:vector_math/vector_math.dart';
 
-import '../../engine/ai/instruction.dart';
-import '../../engine/ai/unit_ai.dart';
-import '../../engine/collision/collider.dart';
-import '../../engine/collision/collider_circle.dart';
-import '../../engine/helper.dart';
-import '../../renderer/shapes/shape.dart';
-import '../../renderer/shapes/shape_circle.dart';
+import '../../../engine/ai/instruction.dart';
+import '../../../engine/ai/unit_ai.dart';
+import '../../../engine/collision/collider.dart';
+import '../../../engine/collision/collider_circle.dart';
+import '../../../engine/helper.dart';
+import '../../../renderer/shapes/shape.dart';
+import '../../../renderer/shapes/shape_circle.dart';
+import '../../stages/stage.dart';
 import '../game_object.dart';
-import '../projectile.dart';
-import '../stages/stage.dart';
+import '../projectiles/projectile.dart';
 
 enum Team { Friendly, Enemy }
 
-class Unit implements GameObject {
+class Unit extends GameObject {
   Vector2 position;
   Stage stage;
 
@@ -40,6 +40,9 @@ class Unit implements GameObject {
       ai.unit = this;
     }
   }
+
+  @override
+  void start() {}
 
   @override
   void update() {
@@ -74,15 +77,15 @@ class Unit implements GameObject {
     stage.units
         .where((GameObject gameObject) => gameObject != this)
         .forEach((GameObject gameObject) {
-      reaction += gameObject.collider()?.reaction(collider());
+      reaction += gameObject.collider?.reaction(collider);
     });
 
     stage.entities.forEach((GameObject gameObject) {
-      reaction += gameObject.collider()?.reaction(collider());
+      reaction += gameObject.collider?.reaction(collider);
     });
 
     stage.obstacles.forEach((GameObject gameObject) {
-      reaction += gameObject.collider()?.reaction(collider());
+      reaction += gameObject.collider?.reaction(collider);
     });
 
     return reaction;
@@ -117,12 +120,7 @@ class Unit implements GameObject {
   }
 
   @override
-  void destroy() {
-    stage.removeUnit(this);
-  }
-
-  @override
-  List<Shape> renderShapes() {
+  List<Shape> get renderShapes {
     if (team == Team.Friendly) {
       if (stage.selectedUnits.contains(this)) {
         return [ShapeCircle(this, radius, "#64b5f6")];
@@ -135,7 +133,12 @@ class Unit implements GameObject {
   }
 
   @override
-  Collider collider() {
+  Collider get collider {
     return ColliderCircle(this, radius);
+  }
+
+  @override
+  void destroy() {
+    stage.removeUnit(this);
   }
 }

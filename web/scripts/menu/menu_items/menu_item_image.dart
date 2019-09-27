@@ -24,8 +24,8 @@ class MenuItemImage extends MenuItem {
   }
 
   @override
-  void render(CanvasRenderingContext2D context) {
-    context.drawImageToRect(
+  void render() {
+    menu.game.context.drawImageToRect(
         image, Rectangle(alignedPosition.x, alignedPosition.y, size.x, size.y));
   }
 }

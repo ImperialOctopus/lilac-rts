@@ -2,7 +2,7 @@ import 'dart:html';
 
 import '../engine/ai/ai_random_move.dart';
 import '../lilac_game.dart';
-import '../stage/units/unit.dart';
+import '../stage/game_objects/units/unit.dart';
 
 class Keyboard {
   LilacGame game;

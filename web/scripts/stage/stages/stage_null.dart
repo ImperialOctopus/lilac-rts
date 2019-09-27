@@ -1,9 +1,8 @@
 import 'dart:html';
-
-import '../entity.dart';
-import '../obstacles/obstacle.dart';
-import '../projectile.dart';
-import '../units/unit.dart';
+import '../game_objects/entities/entity.dart';
+import '../game_objects/obstacles/obstacle.dart';
+import '../game_objects/projectiles/projectile.dart';
+import '../game_objects/units/unit.dart';
 import 'stage.dart';
 
 class StageNull extends Stage {

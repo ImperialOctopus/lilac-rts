@@ -2,29 +2,29 @@ import 'package:vector_math/vector_math.dart';
 
 import '../../engine/collision/collider.dart';
 import '../../renderer/shapes/shape.dart';
-import '../game_object.dart';
 import '../stages/stage.dart';
 
-class Obstacle implements GameObject {
+class GameObject {
   Vector2 position;
   Stage stage;
 
-  Obstacle(this.position);
+  void start() {}
 
   void update() {}
 
-  @override
-  List<Shape> renderShapes() {
+  void render() {
+    for (Shape shape in renderShapes) {
+      shape.render();
+    }
+  }
+
+  void destroy() {}
+
+  List<Shape> get renderShapes {
     return null;
   }
 
-  @override
-  Collider collider() {
+  Collider get collider {
     return null;
-  }
-
-  @override
-  void destroy() {
-    stage.removeObstacle(this);
   }
 }

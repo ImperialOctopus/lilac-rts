@@ -1,4 +1,4 @@
-import '../../stage/units/unit.dart';
+import '../../stage/game_objects/units/unit.dart';
 import 'instruction.dart';
 
 abstract class UnitAI {
