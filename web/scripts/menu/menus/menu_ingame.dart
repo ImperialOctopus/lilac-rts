@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:vector_math/vector_math.dart';
 
 import '../../lilac_game.dart';
+import '../../stage/units/unit.dart';
 import '../menu_items/menu_item.dart';
 import '../menu_items/menu_item_button.dart';
+import '../menu_items/menu_item_image.dart';
 import 'menu.dart';
 
 class MenuIngame extends Menu {
@@ -48,6 +50,25 @@ class MenuIngame extends Menu {
         clickArea: Rectangle(0, 0, 50, 50),
         clickFunction: () => game.stage.time.setSpeed(5),
         enabledFunction: () => game.stage.time.speed == 5));
+    menuItems.add(MenuItemButton(this, Vector2(300, -50), Vector2(50, 50),
+        "assets/menu/ingame/warp-off.png", "assets/menu/ingame/warp-on.png",
+        alignment: Alignment.BottomLeft,
+        clickArea: Rectangle(0, 0, 50, 50),
+        clickFunction: () => game.stage.time.toggleWarp(),
+        enabledFunction: () => game.stage.time.warp));
+
+    menuItems.add(MenuItemImage(this, Vector2(-50, -50), Vector2(50, 50),
+        "assets/menu/ingame/create-enemy.png",
+        alignment: Alignment.BottomRight,
+        clickArea: Rectangle(0, 0, 50, 50),
+        clickFunction: () =>
+            game.stage.addUnit(Unit(game.stage.randomPosition(), Team.Enemy))));
+    menuItems.add(MenuItemImage(this, Vector2(-100, -50), Vector2(50, 50),
+        "assets/menu/ingame/create-friendly.png",
+        alignment: Alignment.BottomRight,
+        clickArea: Rectangle(0, 0, 50, 50),
+        clickFunction: () => game.stage
+            .addUnit(Unit(game.stage.randomPosition(), Team.Friendly))));
     await super.start();
   }
 }

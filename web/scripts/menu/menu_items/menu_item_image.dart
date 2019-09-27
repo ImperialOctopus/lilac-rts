@@ -6,12 +6,11 @@ import '../menus/menu.dart';
 import 'menu_item.dart';
 
 class MenuItemImage extends MenuItem {
-  Vector2 size;
   ImageElement image;
 
-  MenuItemImage(Menu menu, Vector2 position, this.size, String imageSource,
+  MenuItemImage(Menu menu, Vector2 position, Vector2 size, String imageSource,
       {Alignment alignment, Rectangle clickArea, Function clickFunction})
-      : super(menu, position,
+      : super(menu, position, size,
             alignment: alignment,
             clickArea: clickArea,
             clickFunction: clickFunction) {

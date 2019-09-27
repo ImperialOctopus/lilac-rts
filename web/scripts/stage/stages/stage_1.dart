@@ -5,12 +5,12 @@ import '../obstacles/obstacle_wall.dart';
 import '../units/unit.dart';
 import 'stage.dart';
 
-class StageZero extends Stage {
+class Stage1 extends Stage {
   final int height = 1000;
   final int width = 1000;
   final String colour = "#EEEEEE";
 
-  StageZero(game) : super(game);
+  Stage1(game) : super(game);
 
   @override
   void start() {
@@ -18,7 +18,7 @@ class StageZero extends Stage {
     addUnit(Unit(Vector2(100, 50), Team.Friendly));
     addUnit(Unit(Vector2(100, 100), Team.Enemy, ai: AIRandomMove()));
     addObstacle(ObstacleWall(Vector2(300, 300), Vector2(400, 400)));
-    
+
     super.start();
   }
 }

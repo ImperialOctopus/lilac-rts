@@ -6,19 +6,18 @@ import '../menus/menu.dart';
 import 'menu_item.dart';
 
 class MenuItemBox extends MenuItem {
-  Vector2 size;
   String strokeColour;
   int strokeWidth;
   String fillColour;
 
-  MenuItemBox(Menu menu, Vector2 position, this.size,
+  MenuItemBox(Menu menu, Vector2 position, Vector2 size,
       {this.strokeColour = "#FFFFFF",
       this.strokeWidth = 2,
       this.fillColour,
       Alignment alignment,
       Rectangle clickArea,
       Function clickFunction})
-      : super(menu, position,
+      : super(menu, position, size,
             alignment: alignment,
             clickArea: clickArea,
             clickFunction: clickFunction);

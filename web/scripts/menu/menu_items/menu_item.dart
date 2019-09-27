@@ -4,17 +4,18 @@ import 'package:vector_math/vector_math.dart';
 
 import '../menus/menu.dart';
 
-enum Alignment { TopLeft, BottomLeft, TopRight, BottomRight }
+enum Alignment { TopLeft, BottomLeft, TopRight, BottomRight, Centre }
 
 class MenuItem {
   Menu menu;
+  Vector2 size;
   Vector2 position;
   Alignment alignment;
 
   Rectangle clickArea;
   Function clickFunction;
 
-  MenuItem(this.menu, this.position,
+  MenuItem(this.menu, this.position, this.size,
       {this.alignment = Alignment.TopLeft, this.clickArea, this.clickFunction});
 
   Vector2 get alignedPosition {
@@ -33,7 +34,12 @@ class MenuItem {
         x += menu.game.canvas.width;
         y += menu.game.canvas.height;
         break;
+      case Alignment.Centre:
+        x += (menu.game.canvas.width - size.x) / 2;
+        y += (menu.game.canvas.height - size.y) / 2;
+        break;
       default:
+        break;
     }
     return Vector2(x, y);
   }

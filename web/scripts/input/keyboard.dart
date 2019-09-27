@@ -9,11 +9,13 @@ class Keyboard {
   LilacGame game;
 
   Map<int, Function> pressBindings;
+  Map<int, Function> releaseBindings;
   Map<int, Function> holdBindings;
   Set<int> keysHeld;
 
   Keyboard(this.game) {
     pressBindings = Map<int, Function>();
+    releaseBindings = Map<int, Function>();
     holdBindings = Map<int, Function>();
     keysHeld = Set<int>();
   }
@@ -25,6 +27,9 @@ class Keyboard {
 
     addBinding(KeyCode.O, () => game.stage.time.speedUp());
     addBinding(KeyCode.I, () => game.stage.time.speedDown());
+
+    addBinding(KeyCode.C, () => game.stage.time.warp = true);
+    addRelease(KeyCode.C, () => game.stage.time.warp = false);
 
     // Test unit creation
     addBinding(
@@ -75,6 +80,9 @@ class Keyboard {
   }
 
   void keyUp(KeyboardEvent e) {
+    if (releaseBindings.containsKey(e.keyCode)) {
+      releaseBindings[e.keyCode]();
+    }
     keysHeld.remove(e.keyCode);
   }
 
@@ -84,6 +92,14 @@ class Keyboard {
 
   void removeBinding(int i) {
     pressBindings.remove(i);
+  }
+
+  void addRelease(int i, Function f) {
+    releaseBindings[i] = f;
+  }
+
+  void removeRelease(int i) {
+    releaseBindings.remove(i);
   }
 
   void addHold(int i, Function f) {

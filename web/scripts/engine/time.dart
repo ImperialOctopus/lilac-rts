@@ -1,22 +1,24 @@
 class Time {
   bool paused;
+  bool warp;
   int speed;
 
   Time() {
     paused = false;
+    warp = false;
     speed = 5;
   }
 
   double get multiplier {
-    if (paused) {
-      return 0;
-    } else {
-      return speed * 0.2;
-    }
+    return (paused ? 0 : speed * 0.2) + (warp ? 0.4 : 0);
   }
 
   void pause() {
     paused = !paused;
+  }
+
+  void toggleWarp() {
+    warp = !warp;
   }
 
   void speedUp() {

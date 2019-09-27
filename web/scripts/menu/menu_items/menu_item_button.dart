@@ -7,19 +7,18 @@ import '../menus/menu.dart';
 import 'menu_item.dart';
 
 class MenuItemButton extends MenuItem {
-  Vector2 size;
   bool enabled = false;
   Function enabledFunction;
   ImageElement imageOn;
   ImageElement imageOff;
 
-  MenuItemButton(Menu menu, Vector2 position, this.size, String imageSourceOff,
-      String imageSourceOn,
+  MenuItemButton(Menu menu, Vector2 position, Vector2 size,
+      String imageSourceOff, String imageSourceOn,
       {Alignment alignment,
       Rectangle clickArea,
       Function clickFunction,
       this.enabledFunction})
-      : super(menu, position,
+      : super(menu, position, size,
             alignment: alignment,
             clickArea: clickArea,
             clickFunction: clickFunction) {
