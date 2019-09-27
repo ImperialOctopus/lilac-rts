@@ -20,10 +20,14 @@ class Time {
   }
 
   void speedUp() {
-    speed = (speed + 1).clamp(0, 5);
+    speed = (speed + 1).clamp(1, 5);
   }
 
   void speedDown() {
-    speed = (speed - 1).clamp(0, 5);
+    speed = (speed - 1).clamp(1, 5);
+  }
+
+  void setSpeed(int i) {
+    speed = i.clamp(1, 5);
   }
 }

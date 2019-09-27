@@ -2,8 +2,8 @@ import 'package:vector_math/vector_math.dart';
 
 import '../input/mouse.dart';
 import '../lilac_game.dart';
-import '../menu/menu.dart';
-import '../menu/menu_item.dart';
+import '../menu/menu_items/menu_item.dart';
+import '../menu/menus/menu.dart';
 import '../stage/game_object.dart';
 import '../stage/stages/stage.dart';
 import 'shapes/shape.dart';

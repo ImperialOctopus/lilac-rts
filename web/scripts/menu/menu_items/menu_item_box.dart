@@ -2,24 +2,26 @@ import 'dart:html';
 
 import 'package:vector_math/vector_math.dart';
 
-import 'menu.dart';
+import '../menus/menu.dart';
 import 'menu_item.dart';
 
 class MenuItemBox extends MenuItem {
-  int height;
-  int width;
+  Vector2 size;
   String strokeColour;
   int strokeWidth;
   String fillColour;
 
-  MenuItemBox(Menu menu, Vector2 position, this.width, this.height,
+  MenuItemBox(Menu menu, Vector2 position, this.size,
       {this.strokeColour = "#FFFFFF",
       this.strokeWidth = 2,
       this.fillColour,
+      Alignment alignment,
       Rectangle clickArea,
       Function clickFunction})
       : super(menu, position,
-            clickArea: clickArea, clickFunction: clickFunction);
+            alignment: alignment,
+            clickArea: clickArea,
+            clickFunction: clickFunction);
 
   @override
   Future<void> start() async {}
@@ -28,7 +30,7 @@ class MenuItemBox extends MenuItem {
   void render(CanvasRenderingContext2D context) {
     menu.game.context
       ..beginPath()
-      ..rect(position.x, position.y, width, height);
+      ..rect(alignedPosition.x, alignedPosition.y, size.x, size.y);
     if (strokeWidth > 0) {
       menu.game.context
         ..strokeStyle = strokeColour

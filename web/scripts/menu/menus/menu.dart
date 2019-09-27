@@ -1,7 +1,7 @@
 import 'dart:html';
 
-import '../lilac_game.dart';
-import 'menu_item.dart';
+import '../../lilac_game.dart';
+import '../menu_items/menu_item.dart';
 
 class Menu {
   LilacGame game;
@@ -20,7 +20,11 @@ class Menu {
     await Future.wait(futures);
   }
 
-  void update() {}
+  void update() {
+    for (MenuItem menuItem in menuItems) {
+      menuItem.update();
+    }
+  }
 
   void mouseDown(MouseEvent e) {
     for (MenuItem menuItem in menuItems) {

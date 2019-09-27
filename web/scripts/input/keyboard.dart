@@ -51,7 +51,7 @@ class Keyboard {
 
     // Main menu
     addBinding(KeyCode.ESC, () {
-      game.loadStage(null);
+      game.unloadStage();
       game.loadMenu(MenuMain(game));
     });
 

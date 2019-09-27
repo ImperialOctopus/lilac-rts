@@ -6,11 +6,12 @@ import 'package:vector_math/vector_math.dart';
 
 import 'engine/engine.dart';
 import 'input/input.dart';
-import 'menu/menu.dart';
+import 'menu/menus/menu.dart';
 import 'menu/menus/menu_main.dart';
+import 'menu/menus/menu_null.dart';
 import 'renderer/renderer.dart';
 import 'stage/stages/stage.dart';
-import 'stage/stages/stage_zero.dart';
+import 'stage/stages/stage_null.dart';
 
 class LilacGame {
   LilacGame(this.canvas) {
@@ -18,6 +19,9 @@ class LilacGame {
     renderer = Renderer(this);
     engine = Engine(this);
     input = Input(this);
+
+    nullStage = StageNull(this);
+    nullMenu = MenuNull(this);
   }
 
   CanvasElement canvas;
@@ -28,6 +32,9 @@ class LilacGame {
   Stage stage;
   Menu menu;
 
+  Stage nullStage;
+  Menu nullMenu;
+
   void start() async {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -36,6 +43,7 @@ class LilacGame {
     await renderer.start();
     await input.start();
 
+    unloadStage();
     await loadMenu(MenuMain(this));
 
     unawaited(renderLoop());
@@ -45,18 +53,27 @@ class LilacGame {
 
   Future<void> loadStage(Stage newStage) async {
     stage = newStage;
-    await stage?.start();
+    await stage.start();
   }
 
   Future<void> loadMenu(Menu newMenu) async {
     menu = newMenu;
-    await menu?.start();
+    await menu.start();
+  }
+
+  void unloadStage() {
+    stage = nullStage;
+  }
+
+  void unloadMenu() {
+    menu = nullMenu;
   }
 
   Future<void> renderLoop() async {
     while (true) {
       await window.animationFrame;
       await input.update();
+      await menu.update();
       await renderer.render(stage, menu);
     }
   }
